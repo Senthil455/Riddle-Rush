@@ -5,15 +5,10 @@ const TOTAL_CELLS = ROW_SIZE * ROW_SIZE - 1; // 48 cells, skipping center
 
 function generateBoard(): BoardCell[] {
   const cells: BoardCell[] = [];
-  const riddlePositions = new Set<number>();
 
   const easyPositions = [3, 9, 15, 22, 29, 35, 41];
   const mediumPositions = [6, 12, 19, 26, 33, 39, 44];
   const hardPositions = [17, 24, 31, 38, 46];
-
-  easyPositions.forEach((p) => riddlePositions.add(p));
-  mediumPositions.forEach((p) => riddlePositions.add(p));
-  hardPositions.forEach((p) => riddlePositions.add(p));
 
   for (let i = 0; i < TOTAL_CELLS; i++) {
     let type: BoardCellType = 'regular';

@@ -13,30 +13,24 @@ import ForcedRiddleAlert from '@/components/ForcedRiddleAlert';
 import WinnerModal from '@/components/WinnerModal';
 
 function ThemeToggle() {
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') !== 'light';
+    }
+    return true;
+  });
 
   useEffect(() => {
-    const stored = localStorage.getItem('theme');
-    if (stored === 'light') {
-      setDark(false);
-      document.documentElement.classList.remove('dark');
-    } else {
-      setDark(true);
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
+    document.documentElement.classList.toggle('dark', dark);
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }, [dark]);
 
-  const toggle = () => {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle('dark', next);
-    localStorage.setItem('theme', next ? 'dark' : 'light');
-  };
+  const toggle = () => setDark((prev) => !prev);
 
   return (
     <button
       onClick={toggle}
-      className="flex h-9 w-9 items-center justify-center border-2 border-[var(--border)] bg-[var(--bg-card)] text-sm transition-all hover:bg-[var(--bg-card-header)] active:translate-x-[1px] active:translate-y-[1px]"
+      className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--bg-card)]/80 text-sm backdrop-blur-md border border-[var(--border)] transition-all hover:bg-[var(--bg-card-header)] active:scale-95 shadow-sm"
       title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {dark ? '☀' : '☾'}
@@ -52,20 +46,20 @@ function DashboardContent() {
       <WinnerModal />
 
       <div className="relative min-h-screen">
-        <div className="bg-noise fixed inset-0 z-0" />
+        <div className="bg-mesh fixed inset-0 z-0" />
 
-        <header className="relative z-10 border-b-2 border-[var(--border)] bg-[var(--bg)]">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+        <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/70 backdrop-blur-xl supports-[backdrop-filter]:bg-[var(--bg)]/60">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-[var(--amber)] bg-[var(--amber-bg)] text-base font-black tracking-tight text-black shadow-[3px_3px_0px_var(--shadow-strong)]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--amber-bg)] to-[var(--amber)] text-xl font-black tracking-tight text-white shadow-lg shadow-[var(--amber)]/20">
                 RR
               </div>
               <div>
-                <h1 className="font-outfit text-xl font-black tracking-tight text-[var(--amber)]">
-                  RIDDLE RUSH
+                <h1 className="font-outfit text-2xl font-bold tracking-tight text-[var(--text)]">
+                  Riddle Rush
                 </h1>
-                <p className="font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-[var(--text-dim)]">
-                  JUDGE DASHBOARD
+                <p className="font-outfit text-xs font-medium text-[var(--text-dim)]">
+                  Judge Dashboard
                 </p>
               </div>
             </div>
@@ -94,9 +88,9 @@ function DashboardContent() {
           </div>
         </main>
 
-        <footer className="relative z-10 border-t-2 border-[var(--border)] py-6 text-center">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--text-muted)]">
-            RIDDLE RUSH &middot; JUDGE DASHBOARD &middot; {new Date().getFullYear()}
+        <footer className="relative z-10 mt-12 border-t border-[var(--border)] py-8 text-center backdrop-blur-sm">
+          <p className="font-outfit text-sm font-medium text-[var(--text-muted)]">
+            Riddle Rush &middot; Judge Dashboard &middot; {new Date().getFullYear()}
           </p>
         </footer>
       </div>

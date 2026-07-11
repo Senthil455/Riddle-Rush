@@ -9,39 +9,39 @@ import { cn } from '@/lib/utils';
 
 const cellStyles: Record<BoardCellType, { bg: string; border: string; text: string; label: string }> = {
   start: {
-    bg: 'bg-emerald-700',
-    border: 'border-emerald-500',
-    text: 'text-white',
+    bg: 'bg-gradient-to-br from-emerald-400 to-emerald-600',
+    border: 'border-emerald-300/50 shadow-emerald-500/30',
+    text: 'text-white drop-shadow-sm',
     label: 'START',
   },
   regular: {
     bg: 'bg-[var(--bg-input)]',
-    border: 'border-[var(--border)]',
+    border: 'border-[var(--border)] shadow-sm hover:shadow-md',
     text: 'text-[var(--text-muted)]',
     label: '',
   },
   'riddle-easy': {
-    bg: 'bg-amber-200 dark:bg-amber-900/30',
-    border: 'border-amber-500',
-    text: 'text-amber-800 dark:text-amber-300',
+    bg: 'bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/40 dark:to-amber-800/40',
+    border: 'border-amber-300/50 dark:border-amber-700/50 shadow-amber-500/10',
+    text: 'text-amber-700 dark:text-amber-300',
     label: 'EASY',
   },
   'riddle-medium': {
-    bg: 'bg-orange-200 dark:bg-orange-900/30',
-    border: 'border-orange-500',
-    text: 'text-orange-800 dark:text-orange-300',
+    bg: 'bg-gradient-to-br from-orange-200 to-orange-300 dark:from-orange-900/40 dark:to-orange-800/40',
+    border: 'border-orange-400/50 dark:border-orange-700/50 shadow-orange-500/20',
+    text: 'text-orange-800 dark:text-orange-200',
     label: 'MED',
   },
   'riddle-hard': {
-    bg: 'bg-rose-200 dark:bg-rose-900/30',
-    border: 'border-rose-500',
-    text: 'text-rose-800 dark:text-rose-300',
+    bg: 'bg-gradient-to-br from-rose-200 to-rose-300 dark:from-rose-900/40 dark:to-rose-800/40',
+    border: 'border-rose-400/50 dark:border-rose-700/50 shadow-rose-500/20',
+    text: 'text-rose-800 dark:text-rose-200',
     label: 'HARD',
   },
   end: {
-    bg: 'bg-amber-600',
-    border: 'border-amber-400',
-    text: 'text-white',
+    bg: 'bg-gradient-to-br from-indigo-500 to-purple-600',
+    border: 'border-indigo-400/50 shadow-indigo-500/30',
+    text: 'text-white drop-shadow-sm',
     label: 'END',
   },
 };
@@ -60,12 +60,11 @@ function BoardCellView({ cellIndex }: { cellIndex: number }) {
   return (
     <div
       className={cn(
-        'relative flex flex-col items-center justify-center border-2 transition-all',
+        'relative flex flex-col items-center justify-center border transition-all duration-300 rounded-xl',
         style.bg,
         style.border,
-        isSpecial ? 'col-span-2 row-span-2' : '',
-        isRiddle ? 'shadow-[2px_2px_0px_var(--shadow)]' : '',
-        isStart ? 'shadow-[3px_3px_0px_var(--shadow-strong)]' : ''
+        isSpecial ? 'col-span-2 row-span-2 shadow-lg' : 'shadow-sm hover:scale-[1.02] hover:shadow-md hover:z-10',
+        isRiddle ? 'shadow-md' : ''
       )}
       style={{ minHeight: isSpecial ? '72px' : '52px', minWidth: isSpecial ? '68px' : '48px' }}
     >
@@ -98,15 +97,15 @@ function BoardCellView({ cellIndex }: { cellIndex: number }) {
       {teamsHere.length > 0 && (
         <div className="absolute -bottom-2.5 flex gap-0.5">
           {teamsHere.map((team) => (
-            <motion.div
-              key={team.id}
-              initial={{ scale: 0, y: -8 }}
-              animate={{ scale: 1, y: 0 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              className="h-3 w-3 border border-white/40 shadow-[1px_1px_0px_rgba(0,0,0,0.4)]"
-              style={{ backgroundColor: team.color }}
-              title={team.name}
-            />
+              <motion.div
+                key={team.id}
+                initial={{ scale: 0, y: -8 }}
+                animate={{ scale: 1, y: 0 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                className="h-3 w-3 rounded-full border border-white/60 shadow-sm"
+                style={{ backgroundColor: team.color }}
+                title={team.name}
+              />
           ))}
         </div>
       )}
@@ -135,12 +134,12 @@ export default function GameBoard() {
   }, []);
 
   return (
-    <div className="border-2 border-[var(--border)] bg-[var(--bg-card)] shadow-[4px_4px_0px_var(--shadow)]">
-      <div className="flex items-center justify-between border-b-2 border-[var(--border)] px-4 py-2.5 bg-[var(--bg-card-header)]">
-        <h2 className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-[var(--amber)]">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] backdrop-blur-md shadow-xl overflow-hidden">
+      <div className="flex items-center justify-between border-b border-[var(--border)] px-5 py-3.5 bg-[var(--bg-card-header)]/50">
+        <h2 className="font-outfit text-sm font-semibold tracking-wide text-[var(--amber)]">
           Game Board
         </h2>
-        <span className="font-mono text-[10px] text-[var(--text-muted)]">{BOARD_CELLS.length} cells</span>
+        <span className="font-outfit text-xs font-medium text-[var(--text-muted)] bg-[var(--bg)] px-2 py-0.5 rounded-full border border-[var(--border)]">{BOARD_CELLS.length} cells</span>
       </div>
 
       <div className="p-4">

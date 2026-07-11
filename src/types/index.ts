@@ -61,6 +61,7 @@ export type GameState = {
     open: boolean;
     teamId: string | null;
     cellType: BoardCellType | null;
+    riddle: Riddle | null;
   };
   turnPhase: TurnPhase;
 };

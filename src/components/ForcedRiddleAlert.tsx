@@ -36,15 +36,15 @@ export default function ForcedRiddleAlert() {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className="fixed left-1/2 top-4 z-40 -translate-x-1/2"
+            className="fixed left-1/2 top-6 z-40 -translate-x-1/2"
           >
-            <div className="flex items-center gap-3 border-2 border-rose-500/60 bg-rose-900/80 px-5 py-3 shadow-[6px_6px_0px_var(--shadow-strong)]">
-              <span className="font-mono text-lg text-rose-300">⚡</span>
+            <div className="flex items-center gap-4 rounded-2xl border border-rose-500/30 bg-rose-50/90 dark:bg-rose-950/90 backdrop-blur-md px-6 py-4 shadow-xl shadow-rose-500/10">
+              <span className="flex items-center justify-center h-10 w-10 rounded-full bg-rose-100 dark:bg-rose-900/50 text-xl shadow-inner">⚡</span>
               <div>
-                <p className="font-mono text-xs font-black uppercase tracking-wider text-rose-200">
-                  FORCED RIDDLE
+                <p className="font-outfit text-sm font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400">
+                  Forced Riddle
                 </p>
-                <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-rose-300/60">
+                <p className="font-outfit text-xs font-medium text-rose-500/80 dark:text-rose-400/80">
                   {forcedTeam.name} must attempt a riddle
                 </p>
               </div>
@@ -58,7 +58,7 @@ export default function ForcedRiddleAlert() {
           {teamsAtRisk.map((team) => (
             <p
               key={team.id}
-              className="font-mono text-[10px] font-bold uppercase tracking-wider text-amber-400/60"
+              className="font-outfit text-xs font-semibold uppercase tracking-wider text-amber-500/80 dark:text-amber-400/80 drop-shadow-sm"
             >
               ⚡ {team.name}: {3 - team.turnsWithoutRiddle} turn(s) until forced
             </p>

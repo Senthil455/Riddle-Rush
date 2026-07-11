@@ -15,46 +15,48 @@ export default function WinnerModal() {
     })[0];
   }, [state.status, state.teams]);
 
-  if (state.status !== 'ended' || !winner) return null;
-
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--bg)]/80 p-4"
-      >
+      {state.status === 'ended' && winner && (
         <motion.div
-          initial={{ scale: 0.9, y: 40, opacity: 0 }}
-          animate={{ scale: 1, y: 0, opacity: 1 }}
-          exit={{ scale: 0.9, y: 40, opacity: 0 }}
-          className="w-full max-w-md border-2 border-[var(--border)] bg-[var(--bg-card)] shadow-[8px_8px_0px_var(--shadow)]"
+          key="winner-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--bg)]/80 p-4"
         >
-          <div className="border-b-2 border-amber-500/40 bg-amber-500/10 px-6 py-4 text-center">
+          <motion.div
+            key="winner-modal"
+            initial={{ scale: 0.9, y: 40, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.9, y: 40, opacity: 0 }}
+            className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] backdrop-blur-xl shadow-2xl overflow-hidden"
+        >
+          <div className="border-b border-amber-500/20 bg-gradient-to-r from-amber-500/10 via-amber-400/20 to-amber-500/10 px-6 py-6 text-center">
             <motion.span
               animate={{ rotate: [0, -5, 5, -5, 0], scale: [1, 1.1, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="block text-5xl"
+              className="block text-6xl drop-shadow-md"
             >
               🏆
             </motion.span>
-            <h2 className="mt-2 font-mono text-sm font-black uppercase tracking-[0.15em] text-[var(--amber)]">
-              CHAMPION CROWNED
+            <h2 className="mt-3 font-outfit text-lg font-black uppercase tracking-widest text-[var(--amber)] drop-shadow-sm">
+              Champion Crowned
             </h2>
           </div>
 
           <div className="p-6 text-center">
-            <div className="mx-auto mb-5 inline-flex items-center gap-3 border-2 border-amber-500/30 bg-amber-500/10 px-6 py-3 shadow-[4px_4px_0px_var(--shadow-strong)]">
+            <div className="mx-auto mb-6 inline-flex items-center gap-3 rounded-full border border-amber-500/30 bg-amber-50 dark:bg-amber-900/10 px-6 py-3 shadow-md shadow-amber-500/10">
               <div
-                className="h-4 w-4 border border-[var(--border)]"
+                className="h-4 w-4 rounded-full border border-white/40 shadow-inner"
                 style={{ backgroundColor: winner.color }}
               />
-              <span className="font-outfit text-xl font-black text-[var(--amber)]">
+              <span className="font-outfit text-2xl font-black text-[var(--amber)]">
                 {winner.name}
               </span>
             </div>
 
-            <p className="mb-6 font-mono text-[10px] uppercase tracking-wider text-[var(--text-dim)]">
+            <p className="mb-4 font-outfit text-xs font-bold uppercase tracking-widest text-[var(--text-dim)]">
               Final Standings
             </p>
 
@@ -67,27 +69,27 @@ export default function WinnerModal() {
                 .map((team, i) => (
                   <div
                     key={team.id}
-                    className="flex items-center justify-between border-2 border-[var(--border)] bg-[var(--bg-card-header)]/30 px-4 py-2.5"
+                    className="flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-card-header)]/50 px-4 py-3 shadow-sm"
                   >
-                    <div className="flex items-center gap-2.5">
-                      <span className="font-mono text-xs font-bold text-[var(--text-dim)]">
+                    <div className="flex items-center gap-3">
+                      <span className="font-outfit text-sm font-bold text-[var(--text-dim)]">
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <div
-                        className="h-2.5 w-2.5 border border-[var(--border)]"
+                        className="h-3 w-3 rounded-full border border-white/40 shadow-inner"
                         style={{ backgroundColor: team.color }}
                       />
                       <span className="font-outfit text-sm font-bold text-[var(--text)]">
                         {team.name}
                       </span>
                     </div>
-                    <div className="flex gap-4 font-mono text-[10px] text-[var(--text-dim)]">
+                    <div className="flex gap-4 font-outfit text-xs text-[var(--text-dim)] font-medium">
                       <span>
-                        POS{' '}
+                        Pos:{' '}
                         <strong className="text-[var(--text)]">{team.position + 1}</strong>
                       </span>
                       <span>
-                        S{' '}
+                        Score:{' '}
                         <strong className="text-[var(--amber)]">{team.score}</strong>
                       </span>
                     </div>
@@ -97,13 +99,14 @@ export default function WinnerModal() {
 
             <button
               onClick={resetGame}
-              className="w-full border-2 border-amber-500 bg-[var(--amber-bg)] px-4 py-3 font-mono text-xs font-black uppercase tracking-wider text-black shadow-[4px_4px_0px_rgba(245,158,11,0.4)] transition-all hover:brightness-110 active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+              className="mt-6 w-full rounded-xl bg-gradient-to-r from-[var(--amber-bg)] to-[var(--amber)] px-4 py-3.5 font-outfit text-sm font-bold text-white shadow-lg shadow-[var(--amber)]/30 transition-all hover:scale-[1.02] hover:shadow-[var(--amber)]/50 active:scale-95"
             >
-              NEW GAME
+              Start New Game
             </button>
           </div>
         </motion.div>
       </motion.div>
+    )}
     </AnimatePresence>
   );
 }

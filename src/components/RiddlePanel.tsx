@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { useGame } from '@/lib/game-context';
-import { Riddle } from '@/types';
 
 const difficultyConfig = {
   easy: { label: 'EASY', border: 'border-amber-500/50', dot: 'bg-amber-400' },
@@ -12,20 +11,12 @@ const difficultyConfig = {
 };
 
 export default function RiddlePanel() {
-  const { state, getRandomRiddle, handleRiddleResult } = useGame();
+  const { state, handleRiddleResult } = useGame();
   const { riddleModal } = state;
-  const [currentRiddle, setCurrentRiddle] = useState<Riddle | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  useEffect(() => {
-    if (riddleModal.open && riddleModal.cellType) {
-      const riddle = getRandomRiddle(riddleModal.cellType);
-      setCurrentRiddle(riddle || null);
-      setSelectedAnswer(null);
-      setShowResult(false);
-    }
-  }, [riddleModal.open, riddleModal.cellType, getRandomRiddle]);
+  const currentRiddle = riddleModal.riddle;
 
   const handleSubmit = useCallback(() => {
     if (!selectedAnswer || !currentRiddle || !riddleModal.teamId) return;
@@ -54,14 +45,14 @@ export default function RiddlePanel() {
         initial={{ scale: 0.9, y: 30, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.9, y: 30, opacity: 0 }}
-        className={`w-full max-w-lg border-2 ${config.border} bg-[var(--bg-card)] shadow-[8px_8px_0px_var(--shadow-strong)]`}
+        className={`w-full max-w-lg rounded-2xl border ${config.border} bg-[var(--bg-card)] backdrop-blur-xl shadow-2xl`}
       >
-        <div className={`flex items-center justify-between border-b-2 ${config.border} px-5 py-3 bg-[var(--bg-card-header)]`}>
+        <div className={`flex items-center justify-between border-b ${config.border} px-6 py-4 bg-[var(--bg-card-header)]/80`}>
           <div className="flex items-center gap-3">
-            <div className={`h-2.5 w-2.5 ${config.dot}`} />
-            <span className="font-outfit text-sm font-bold text-[var(--text)]">{team?.name}</span>
+            <div className={`h-3 w-3 rounded-full shadow-inner ${config.dot}`} />
+            <span className="font-outfit text-base font-bold text-[var(--text)]">{team?.name}</span>
           </div>
-          <span className={`font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--text-dim)]`}>
+          <span className={`font-outfit text-xs font-bold uppercase tracking-wider text-[var(--text-dim)] bg-[var(--bg-input)] px-3 py-1 rounded-full shadow-sm border ${config.border}`}>
             {config.label}
           </span>
         </div>
@@ -71,26 +62,26 @@ export default function RiddlePanel() {
             {currentRiddle.question}
           </h3>
 
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             {currentRiddle.options.map((option) => {
               const isSelected = selectedAnswer === option;
               const isRight = option === currentRiddle.answer;
               const reveal = showResult && (isSelected || isRight);
 
-              let border = 'border-[var(--border)] hover:border-[var(--border-hover)]';
-              let bg = 'bg-[var(--bg-card-header)]/50 hover:bg-[var(--bg-card-header)]';
+              let border = 'border-[var(--border)] hover:border-[var(--border-hover)] hover:shadow-md';
+              let bg = 'bg-[var(--bg-input)] hover:bg-[var(--bg-card-header)]';
 
               if (reveal) {
                 if (isRight) {
-                  border = 'border-emerald-500/70';
-                  bg = 'bg-emerald-900/30';
+                  border = 'border-emerald-500/70 shadow-emerald-500/20';
+                  bg = 'bg-emerald-50 dark:bg-emerald-900/30';
                 } else if (isSelected && !isRight) {
-                  border = 'border-rose-500/70';
-                  bg = 'bg-rose-900/30';
+                  border = 'border-rose-500/70 shadow-rose-500/20';
+                  bg = 'bg-rose-50 dark:bg-rose-900/30';
                 }
               } else if (isSelected) {
-                border = 'border-amber-500/70';
-                bg = 'bg-amber-500/10';
+                border = 'border-amber-500/70 shadow-amber-500/20 ring-2 ring-amber-500/20';
+                bg = 'bg-amber-50 dark:bg-amber-900/20';
               }
 
               return (
@@ -100,18 +91,18 @@ export default function RiddlePanel() {
                     if (!showResult) setSelectedAnswer(option);
                   }}
                   disabled={showResult}
-                  className={`w-full border-2 px-4 py-3 text-left text-sm font-medium text-[var(--text)] transition-all ${border} ${bg}`}
+                  className={`w-full rounded-xl border px-5 py-3.5 text-left text-sm font-medium text-[var(--text)] shadow-sm transition-all duration-200 ${border} ${bg}`}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className={`flex h-5 w-5 shrink-0 items-center justify-center border-2 text-[10px] font-bold ${
-                      isSelected ? 'border-amber-500 text-amber-400' : 'border-[var(--border)] text-[var(--text-muted)]'
+                  <div className="flex items-center gap-4">
+                    <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border shadow-inner text-[10px] font-bold ${
+                      isSelected ? 'border-amber-500 bg-amber-500 text-white' : 'border-[var(--border)] bg-[var(--bg)] text-transparent'
                     }`}>
-                      {isSelected ? '●' : '○'}
+                      ✓
                     </span>
-                    {option}
-                    {reveal && isRight && <span className="ml-auto font-mono text-xs text-emerald-400">✓</span>}
+                    <span className="font-outfit">{option}</span>
+                    {reveal && isRight && <span className="ml-auto font-outfit text-sm font-bold text-emerald-500">Correct</span>}
                     {reveal && isSelected && !isRight && (
-                      <span className="ml-auto font-mono text-xs text-rose-400">✗</span>
+                      <span className="ml-auto font-outfit text-sm font-bold text-rose-500">Incorrect</span>
                     )}
                   </div>
                 </button>
@@ -123,25 +114,25 @@ export default function RiddlePanel() {
             <button
               onClick={handleSubmit}
               disabled={!selectedAnswer}
-              className={`mt-5 w-full border-2 px-4 py-3 font-mono text-xs font-black uppercase tracking-wider transition-all ${
+              className={`mt-6 w-full rounded-xl px-4 py-3.5 font-outfit text-sm font-bold shadow-lg transition-all ${
                 selectedAnswer
-                  ? 'border-amber-500 bg-[var(--amber-bg)] text-black shadow-[4px_4px_0px_rgba(245,158,11,0.4)] hover:brightness-110 active:translate-x-[4px] active:translate-y-[4px] active:shadow-none'
-                  : 'border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)]'
+                  ? 'bg-gradient-to-r from-[var(--amber-bg)] to-[var(--amber)] text-white shadow-[var(--amber)]/30 hover:scale-[1.02] hover:shadow-[var(--amber)]/50 active:scale-95'
+                  : 'border border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)] shadow-none'
               }`}
             >
-              SUBMIT ANSWER
+              Submit Answer
             </button>
           ) : (
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-5 border-2 border-[var(--border)] bg-[var(--bg-card-header)] p-4 text-center"
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              className={`mt-6 rounded-xl border p-5 text-center shadow-lg ${isCorrect ? 'border-emerald-500/50 bg-emerald-50 dark:bg-emerald-900/20 shadow-emerald-500/10' : 'border-rose-500/50 bg-rose-50 dark:bg-rose-900/20 shadow-rose-500/10'}`}
             >
-              <p className={`font-mono text-lg font-black uppercase tracking-wider ${isCorrect ? 'text-emerald-400' : 'text-rose-400'}`}>
-                {isCorrect ? '✓ CORRECT' : '✗ INCORRECT'}
+              <p className={`font-outfit text-xl font-bold ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                {isCorrect ? '✓ Correct!' : '✗ Incorrect'}
               </p>
-              <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-dim)]">
-                {isCorrect ? '+10 PTS & +2 SPACES' : '-5 PTS & -1 SPACE'}
+              <p className="mt-2 font-outfit text-sm font-medium text-[var(--text-dim)]">
+                {isCorrect ? '+10 Points & +2 Spaces' : '-5 Points & -1 Space'}
               </p>
             </motion.div>
           )}

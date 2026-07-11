@@ -49,25 +49,25 @@ export default function TeamRegistration() {
   };
 
   return (
-    <div className="border-2 border-[var(--border)] bg-[var(--bg-card)] shadow-[4px_4px_0px_var(--shadow)]">
-      <div className="flex items-center justify-between border-b-2 border-[var(--border)] px-4 py-2.5 bg-[var(--bg-card-header)]">
-        <h2 className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-[var(--amber)]">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] backdrop-blur-md shadow-xl overflow-hidden">
+      <div className="flex items-center justify-between border-b border-[var(--border)] px-5 py-3.5 bg-[var(--bg-card-header)]/50">
+        <h2 className="font-outfit text-sm font-semibold tracking-wide text-[var(--amber)]">
           Teams
         </h2>
-        <span className="font-mono text-[10px] text-[var(--text-muted)]">{state.teams.length}/6</span>
+        <span className="font-outfit text-xs font-medium text-[var(--text-muted)] bg-[var(--bg)] px-2 py-0.5 rounded-full border border-[var(--border)]">{state.teams.length}/6</span>
       </div>
 
       <div className="p-4">
         {!isDisabled && (
-          <button
-            onClick={() => {
-              resetForm();
-              setShowForm(!showForm);
-            }}
-            className="mb-3 w-full border-2 border-[var(--border)] bg-[var(--bg-card-header)] px-3 py-2 font-mono text-xs font-bold uppercase tracking-wider text-[var(--text-dim)] shadow-[2px_2px_0px_var(--shadow)] transition-all hover:border-[var(--border-hover)] hover:text-[var(--text)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
-          >
-            {showForm ? '— CANCEL' : '+ ADD TEAM'}
-          </button>
+            <button
+              onClick={() => {
+                resetForm();
+                setShowForm(!showForm);
+              }}
+              className="mb-4 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-card-header)] px-4 py-2.5 font-outfit text-sm font-medium text-[var(--text-dim)] shadow-sm transition-all hover:bg-[var(--border)] hover:text-[var(--text)] active:scale-95"
+            >
+              {showForm ? 'Cancel' : '+ Add Team'}
+            </button>
         )}
 
         <AnimatePresence>
@@ -80,51 +80,51 @@ export default function TeamRegistration() {
               className="mb-4 space-y-2.5 overflow-hidden"
             >
               <div>
-                <label className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--text-dim)]">
-                  Team name
+                <label className="mb-1.5 block font-outfit text-xs font-medium text-[var(--text-dim)]">
+                  Team Name
                 </label>
                 <input
                   type="text"
                   value={teamName}
                   onChange={(e) => setTeamName(e.target.value)}
                   placeholder="e.g. Team Alpha"
-                  className="w-full border-2 border-[var(--border)] bg-[var(--bg-input)] px-3 py-2 font-outfit text-sm text-[var(--text)] placeholder-[var(--text-muted)] outline-none transition-all focus:border-[var(--amber)]"
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg-input)] px-4 py-2.5 font-outfit text-sm text-[var(--text)] placeholder-[var(--text-muted)] shadow-inner outline-none transition-all focus:border-[var(--amber)] focus:ring-2 focus:ring-[var(--amber)]/20"
                   maxLength={30}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--text-dim)]">
-                    P1
+                  <label className="mb-1.5 block font-outfit text-xs font-medium text-[var(--text-dim)]">
+                    Participant 1
                   </label>
                   <input
                     type="text"
                     value={participant1}
                     onChange={(e) => setParticipant1(e.target.value)}
                     placeholder="Name"
-                    className="w-full border-2 border-[var(--border)] bg-[var(--bg-input)] px-3 py-2 font-outfit text-sm text-[var(--text)] placeholder-[var(--text-muted)] outline-none transition-all focus:border-[var(--amber)]"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg-input)] px-4 py-2.5 font-outfit text-sm text-[var(--text)] placeholder-[var(--text-muted)] shadow-inner outline-none transition-all focus:border-[var(--amber)] focus:ring-2 focus:ring-[var(--amber)]/20"
                     maxLength={30}
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--text-dim)]">
-                    P2
+                  <label className="mb-1.5 block font-outfit text-xs font-medium text-[var(--text-dim)]">
+                    Participant 2
                   </label>
                   <input
                     type="text"
                     value={participant2}
                     onChange={(e) => setParticipant2(e.target.value)}
                     placeholder="Name"
-                    className="w-full border-2 border-[var(--border)] bg-[var(--bg-input)] px-3 py-2 font-outfit text-sm text-[var(--text)] placeholder-[var(--text-muted)] outline-none transition-all focus:border-[var(--amber)]"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg-input)] px-4 py-2.5 font-outfit text-sm text-[var(--text)] placeholder-[var(--text-muted)] shadow-inner outline-none transition-all focus:border-[var(--amber)] focus:ring-2 focus:ring-[var(--amber)]/20"
                     maxLength={30}
                   />
                 </div>
               </div>
               <button
                 type="submit"
-                className="w-full border-2 border-[var(--amber)] bg-[var(--amber-bg)] px-3 py-2.5 font-mono text-xs font-black uppercase tracking-wider text-black shadow-[3px_3px_0px_var(--shadow-strong)] transition-all hover:brightness-110 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
+                className="mt-2 w-full rounded-xl bg-gradient-to-r from-[var(--amber-bg)] to-[var(--amber)] px-4 py-3 font-outfit text-sm font-bold text-white shadow-lg shadow-[var(--amber)]/30 transition-all hover:scale-[1.02] hover:shadow-[var(--amber)]/50 active:scale-95"
               >
-                {editingId ? 'Update' : 'Register'}
+                {editingId ? 'Update Team' : 'Register Team'}
               </button>
             </motion.form>
           )}
@@ -143,11 +143,11 @@ export default function TeamRegistration() {
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 12 }}
-                className="border-2 border-[var(--border)] bg-[var(--bg-card-header)]/50 transition-all hover:border-[var(--border-hover)]"
+                className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] shadow-sm transition-all hover:border-[var(--border-hover)] hover:shadow-md"
               >
-                <div className="flex items-center gap-3 p-3">
+                <div className="flex items-center gap-3 p-3.5">
                   <div
-                    className="flex h-8 w-8 shrink-0 items-center justify-center border-2 border-white/20 font-mono text-sm font-bold text-white shadow-[2px_2px_0px_rgba(0,0,0,0.3)]"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 font-outfit text-sm font-bold text-white shadow-inner"
                     style={{ backgroundColor: team.color }}
                   >
                     {i + 1}
@@ -156,21 +156,21 @@ export default function TeamRegistration() {
                     <p className="truncate font-outfit text-sm font-bold text-[var(--text)]">
                       {team.name}
                     </p>
-                    <p className="truncate font-mono text-[10px] uppercase tracking-wider text-[var(--text-dim)]">
+                    <p className="truncate font-outfit text-xs text-[var(--text-dim)]">
                       {team.participants[0].name} &amp; {team.participants[1].name}
                     </p>
                   </div>
                   {!isDisabled && (
-                    <div className="flex gap-1">
+                    <div className="flex gap-1.5">
                       <button
                         onClick={() => handleEdit(team)}
-                        className="border-2 border-[var(--border)] bg-[var(--bg-card-header)] px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--text-dim)] transition-all hover:border-[var(--border-hover)] hover:text-[var(--text)]"
+                        className="rounded-lg bg-[var(--bg-input)] px-2.5 py-1.5 font-outfit text-xs font-medium text-[var(--text-dim)] shadow-sm transition-all hover:bg-[var(--border)] hover:text-[var(--text)] active:scale-95"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => removeTeam(team.id)}
-                        className="border-2 border-red-800/40 bg-red-900/20 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-red-400/60 transition-all hover:bg-red-800/40 hover:text-red-300"
+                        className="rounded-lg bg-red-100/50 dark:bg-red-900/30 px-2.5 py-1.5 font-outfit text-xs font-medium text-red-600 dark:text-red-400 shadow-sm transition-all hover:bg-red-200/50 dark:hover:bg-red-900/50 active:scale-95"
                       >
                         Remove
                       </button>

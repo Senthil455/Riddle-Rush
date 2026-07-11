@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useReducer, useCallback, useRef } from 'react';
+import React, { createContext, useContext, useReducer, useCallback, useRef, useEffect } from 'react';
 import { GameState, Team, LogEntry, BoardCellType, Participant, TurnPhase } from '@/types';
 import { BOARD_CELLS, TOTAL_CELLS_COUNT, TEAM_COLORS } from '@/data/board';
 import { RIDDLES } from '@/data/riddles';
@@ -14,7 +14,7 @@ const initialState: GameState = {
   dice: { value: 1, isRolling: false },
   log: [],
   forcedRiddleTeamId: null,
-  riddleModal: { open: false, teamId: null, cellType: null },
+        riddleModal: { open: false, teamId: null, cellType: null, riddle: null },
   turnPhase: 'waiting',
 };
 
@@ -141,16 +141,23 @@ function gameReducer(state: GameState, action: Action): GameState {
         forcedRiddleTeamId: null,
       };
     }
-    case 'OPEN_RIDDLE':
+    case 'OPEN_RIDDLE': {
+      let difficulty: 'easy' | 'medium' | 'hard';
+      if (action.payload.cellType === 'riddle-easy') difficulty = 'easy';
+      else if (action.payload.cellType === 'riddle-medium') difficulty = 'medium';
+      else difficulty = 'hard';
+      const pool = RIDDLES.filter((r) => r.difficulty === difficulty);
+      const riddle = pool[Math.floor(Math.random() * pool.length)] || null;
       return {
         ...state,
-        riddleModal: { open: true, teamId: action.payload.teamId, cellType: action.payload.cellType },
+        riddleModal: { open: true, teamId: action.payload.teamId, cellType: action.payload.cellType, riddle },
         turnPhase: 'riddle',
       };
+    }
     case 'CLOSE_RIDDLE':
       return {
         ...state,
-        riddleModal: { open: false, teamId: null, cellType: null },
+  riddleModal: { open: false, teamId: null, cellType: null, riddle: null },
       };
     case 'RIDDLE_RESULT': {
       const team = state.teams.find((t) => t.id === action.payload.teamId);
@@ -205,7 +212,6 @@ type GameContextType = {
   addLog: (message: string, type: LogEntry['type']) => void;
   getCurrentTeam: () => Team | undefined;
   getTeamById: (id: string) => Team | undefined;
-  getRandomRiddle: (cellType: BoardCellType) => typeof RIDDLES[0] | undefined;
   checkForcedRiddle: () => string | null;
   setTurnPhase: (phase: TurnPhase) => void;
 };
@@ -215,7 +221,9 @@ const GameContext = createContext<GameContextType | null>(null);
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   const stateRef = useRef(state);
-  stateRef.current = state;
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
 
   const addTeam = useCallback((name: string, participants: [Participant, Participant]) => {
     dispatch({ type: 'ADD_TEAM', payload: { name, participants } });
@@ -379,16 +387,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     return stateRef.current.teams.find((t) => t.id === id);
   }, []);
 
-  const getRandomRiddle = useCallback((cellType: BoardCellType) => {
-    let difficulty: 'easy' | 'medium' | 'hard';
-    if (cellType === 'riddle-easy') difficulty = 'easy';
-    else if (cellType === 'riddle-medium') difficulty = 'medium';
-    else difficulty = 'hard';
-
-    const pool = RIDDLES.filter((r) => r.difficulty === difficulty);
-    return pool[Math.floor(Math.random() * pool.length)];
-  }, []);
-
   const checkForcedRiddle = useCallback(() => {
     const team = stateRef.current.teams.find(
       (t) => t.turnsWithoutRiddle >= 3 && stateRef.current.currentTeamIndex === stateRef.current.teams.indexOf(t)
@@ -424,7 +422,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         addLog,
         getCurrentTeam,
         getTeamById,
-        getRandomRiddle,
         checkForcedRiddle,
         setTurnPhase,
       }}
