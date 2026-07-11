@@ -12,16 +12,94 @@ const diceDots: Record<number, [number, number][]> = {
   6: [[25, 25], [25, 75], [50, 25], [50, 75], [75, 25], [75, 75]],
 };
 
-function DiceFace({ value }: { value: number }) {
+const FACE_VALUES = [1, 6, 3, 4, 2, 5];
+
+const faceTransforms = [
+  'translateZ(50px)',
+  'rotateY(180deg) translateZ(50px)',
+  'rotateY(-90deg) translateZ(50px)',
+  'rotateY(90deg) translateZ(50px)',
+  'rotateX(-90deg) translateZ(50px)',
+  'rotateX(90deg) translateZ(50px)',
+];
+
+const targetRotations: Record<number, { x: number; y: number }> = {
+  1: { x: 0, y: 0 },
+  2: { x: -90, y: 0 },
+  3: { x: 0, y: -90 },
+  4: { x: 0, y: 90 },
+  5: { x: 90, y: 0 },
+  6: { x: 0, y: 180 },
+};
+
+function DiceFace({ value, transform }: { value: number; transform: string }) {
   const dots = diceDots[value] || diceDots[1];
   return (
-    <svg viewBox="0 0 100 100" className="h-full w-full">
-      <rect x="4" y="4" width="92" height="92" rx="0" ry="0" fill="#e8e0f0" stroke="#1a0a2e" strokeWidth="3" />
-      <rect x="8" y="8" width="84" height="84" rx="0" ry="0" fill="#f5f0fa" stroke="none" />
-      {dots.map(([cx, cy], i) => (
-        <circle key={i} cx={cx} cy={cy} r="8" fill="#1a0a2e" />
+    <div
+      className="absolute inset-0 flex items-center justify-center"
+      style={{ transform, backfaceVisibility: 'hidden' }}
+    >
+      <div className="relative h-full w-full bg-[#f5f0fa]">
+        <div className="absolute inset-[3px] border-2 border-[#1a0a2e]">
+          {dots.map(([cx, cy], i) => (
+            <div
+              key={i}
+              className="absolute h-[15px] w-[15px] rounded-full bg-[#1a0a2e] -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${cx}%`, top: `${cy}%` }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RollingCube() {
+  return (
+    <motion.div
+      className="relative h-full w-full"
+      style={{ transformStyle: 'preserve-3d' }}
+      initial={{ rotateX: 0, rotateY: 0 }}
+      animate={{ rotateX: 1080, rotateY: 1080 }}
+      exit={{ opacity: 0, scale: 0.3 }}
+      transition={{ duration: 0.8, ease: 'easeInOut' }}
+    >
+      {faceTransforms.map((t, i) => (
+        <DiceFace key={i} value={FACE_VALUES[i]} transform={t} />
       ))}
-    </svg>
+    </motion.div>
+  );
+}
+
+function ResultCube({ value }: { value: number }) {
+  const target = targetRotations[value] || targetRotations[1];
+  return (
+    <motion.div
+      className="relative h-full w-full"
+      style={{ transformStyle: 'preserve-3d' }}
+      initial={{
+        rotateX: target.x + 180,
+        rotateY: target.y + 180,
+        y: -40,
+        opacity: 0,
+      }}
+      animate={{
+        rotateX: target.x,
+        rotateY: target.y,
+        y: 0,
+        opacity: 1,
+      }}
+      transition={{
+        type: 'spring',
+        stiffness: 220,
+        damping: 18,
+        mass: 0.8,
+      }}
+    >
+      {faceTransforms.map((t, i) => (
+        <DiceFace key={i} value={FACE_VALUES[i]} transform={t} />
+      ))}
+    </motion.div>
   );
 }
 
@@ -46,25 +124,16 @@ export default function VirtualDice() {
       </div>
 
       <div className="flex flex-col items-center gap-4 p-5">
-        <div className="h-28 w-28 shadow-[4px_4px_0px_var(--shadow-strong)]">
+        <div
+          className="flex h-[100px] w-[100px] items-center justify-center shadow-[4px_4px_0px_var(--shadow-strong)]"
+          style={{ perspective: '400px' }}
+        >
           <AnimatePresence mode="wait">
-            <motion.div
-              key={dice.isRolling ? 'rolling' : `face-${dice.value}`}
-              initial={dice.isRolling ? { rotate: 0 } : { rotate: 360, scale: 0.5 }}
-              animate={
-                dice.isRolling
-                  ? {
-                      rotate: [0, 90, 180, 270, 360],
-                      scale: [1, 1.15, 0.85, 1.1, 1],
-                    }
-                  : { rotate: 0, scale: 1 }
-              }
-              exit={{ scale: 0.5, opacity: 0 }}
-              transition={{ duration: dice.isRolling ? 0.7 : 0.35, ease: 'easeOut' }}
-              className="h-full w-full"
-            >
-              <DiceFace value={dice.isRolling ? 1 : dice.value} />
-            </motion.div>
+            {dice.isRolling ? (
+              <RollingCube key="rolling" />
+            ) : (
+              <ResultCube key={`face-${dice.value}`} value={dice.value} />
+            )}
           </AnimatePresence>
         </div>
 
