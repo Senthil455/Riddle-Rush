@@ -39,7 +39,7 @@ function DiceFace({ value, transform }: { value: number; transform: string }) {
       className="absolute inset-0 flex items-center justify-center"
       style={{ transform, backfaceVisibility: 'hidden' }}
     >
-      <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-white to-gray-200 dark:from-zinc-800 dark:to-zinc-900 shadow-xl border border-white/50 dark:border-white/10">
+      <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-ivory-100 to-ivory-200 dark:from-zinc-800 dark:to-zinc-900 shadow-xl border border-white/50 dark:border-white/10">
         <div className="absolute inset-1 rounded-xl border border-black/5 dark:border-black/20 bg-white/50 dark:bg-black/20">
           {dots.map(([cx, cy], i) => (
             <div
@@ -77,24 +77,9 @@ function ResultCube({ value }: { value: number }) {
     <motion.div
       className="relative h-full w-full"
       style={{ transformStyle: 'preserve-3d' }}
-      initial={{
-        rotateX: target.x + 180,
-        rotateY: target.y + 180,
-        y: -40,
-        opacity: 0,
-      }}
-      animate={{
-        rotateX: target.x,
-        rotateY: target.y,
-        y: 0,
-        opacity: 1,
-      }}
-      transition={{
-        type: 'spring',
-        stiffness: 220,
-        damping: 18,
-        mass: 0.8,
-      }}
+      initial={{ rotateX: target.x + 180, rotateY: target.y + 180, y: -40, opacity: 0 }}
+      animate={{ rotateX: target.x, rotateY: target.y, y: 0, opacity: 1 }}
+      transition={{ type: 'spring', stiffness: 220, damping: 18, mass: 0.8 }}
     >
       {faceTransforms.map((t, i) => (
         <DiceFace key={i} value={FACE_VALUES[i]} transform={t} />
@@ -111,23 +96,27 @@ export default function VirtualDice() {
   const canNext = status === 'playing' && turnPhase === 'done' && !dice.isRolling;
 
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] backdrop-blur-md shadow-xl overflow-hidden">
-      <div className="flex items-center justify-between border-b border-[var(--border)] px-5 py-3.5 bg-[var(--bg-card-header)]/50">
-        <h2 className="font-outfit text-sm font-semibold tracking-wide text-[var(--amber)]">
-          Dice
-        </h2>
+    <div className="dice-tray corner-ornament">
+      <div className="card-panel-header">
+        <div className="flex items-center gap-2.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--gold)]">
+            <rect x="2" y="2" width="20" height="20" rx="3" />
+            <circle cx="8" cy="8" r="1.5" fill="currentColor" />
+            <circle cx="16" cy="16" r="1.5" fill="currentColor" />
+          </svg>
+          <h2 className="font-outfit text-xs font-bold uppercase tracking-[0.15em] text-[var(--text)]">
+            Fate Roll
+          </h2>
+        </div>
         {teams.length > 0 && currentTeam && (
-          <span className="font-outfit text-xs font-medium text-[var(--text-dim)] bg-[var(--bg)] px-2 py-0.5 rounded-full border border-[var(--border)]">
+          <span className="font-outfit text-[10px] font-medium text-[var(--text-dim)] bg-[var(--bg)]/50 px-2 py-0.5 rounded border border-[var(--border)]">
             {currentTeam.name}
           </span>
         )}
       </div>
 
-      <div className="flex flex-col items-center gap-6 p-6">
-        <div
-          className="flex h-[100px] w-[100px] items-center justify-center"
-          style={{ perspective: '800px' }}
-        >
+      <div className="flex flex-col items-center gap-5 p-5">
+        <div className="flex h-[90px] w-[90px] items-center justify-center" style={{ perspective: '800px' }}>
           <AnimatePresence mode="wait">
             {dice.isRolling ? (
               <RollingCube key="rolling" />
@@ -141,7 +130,7 @@ export default function VirtualDice() {
           <motion.p
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="font-mono text-4xl font-black text-[var(--amber)]"
+            className="font-mono text-3xl font-black text-[var(--gold)]"
           >
             {dice.value}
           </motion.p>
@@ -151,13 +140,13 @@ export default function VirtualDice() {
           <button
             onClick={rollDice}
             disabled={!canRoll}
-            className={`w-full rounded-xl px-4 py-3 font-outfit text-sm font-bold shadow-lg transition-all ${
+            className={`w-full rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all ${
               canRoll
-                ? 'bg-gradient-to-r from-[var(--amber-bg)] to-[var(--amber)] text-white shadow-[var(--amber)]/30 hover:scale-[1.02] hover:shadow-[var(--amber)]/50 active:scale-95'
-                : 'border border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)] shadow-none'
+                ? 'btn-gold'
+                : 'border border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)]'
             }`}
           >
-            {dice.isRolling ? 'Rolling...' : 'Roll Dice'}
+            {dice.isRolling ? 'Rolling...' : 'Cast Dice'}
           </button>
         )}
 
@@ -166,7 +155,7 @@ export default function VirtualDice() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             onClick={() => nextTurn()}
-            className="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-4 py-3 font-outfit text-sm font-bold text-white shadow-lg shadow-emerald-500/30 transition-all hover:scale-[1.02] hover:shadow-emerald-500/50 active:scale-95"
+            className="btn-emerald w-full rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
           >
             Next Turn →
           </motion.button>

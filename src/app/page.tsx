@@ -30,10 +30,18 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--bg-card)]/80 text-sm backdrop-blur-md border border-[var(--border)] transition-all hover:bg-[var(--bg-card-header)] active:scale-95 shadow-sm"
+      className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--bg-card-header)] text-sm transition-all hover:border-[var(--border-hover)] active:scale-95"
       title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      {dark ? '☀' : '☾'}
+      {dark ? (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--gold)]">
+          <circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+        </svg>
+      ) : (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--text-dim)]">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      )}
     </button>
   );
 }
@@ -46,19 +54,24 @@ function DashboardContent() {
       <WinnerModal />
 
       <div className="relative min-h-screen">
-        <div className="bg-mesh fixed inset-0 z-0" />
+        <div className="bg-texture" />
+        <div className="bg-atmosphere" />
 
-        <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/70 backdrop-blur-xl supports-[backdrop-filter]:bg-[var(--bg)]/60">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+        <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-xl">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--amber-bg)] to-[var(--amber)] text-xl font-black tracking-tight text-white shadow-lg shadow-[var(--amber)]/20">
-                RR
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--gold-bg)] to-[var(--gold)] text-base font-bold tracking-tight text-white shadow-lg shadow-[var(--gold)]/20">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                  <path d="M2 17l10 5 10-5" />
+                  <path d="M2 12l10 5 10-5" />
+                </svg>
               </div>
               <div>
-                <h1 className="font-outfit text-2xl font-bold tracking-tight text-[var(--text)]">
+                <h1 className="font-outfit text-xl font-bold tracking-tight text-[var(--text)]">
                   Riddle Rush
                 </h1>
-                <p className="font-outfit text-xs font-medium text-[var(--text-dim)]">
+                <p className="font-outfit text-[10px] font-medium tracking-widest uppercase text-[var(--text-muted)]">
                   Judge Dashboard
                 </p>
               </div>
@@ -88,8 +101,11 @@ function DashboardContent() {
           </div>
         </main>
 
-        <footer className="relative z-10 mt-12 border-t border-[var(--border)] py-8 text-center backdrop-blur-sm">
-          <p className="font-outfit text-sm font-medium text-[var(--text-muted)]">
+        <footer className="relative z-10 mt-12 border-t border-[var(--border)] py-6 text-center">
+          <div className="divider-rune px-4 max-w-xs mx-auto mb-4">
+            <span>✧ end of record ✧</span>
+          </div>
+          <p className="font-outfit text-xs font-medium text-[var(--text-muted)]">
             Riddle Rush &middot; Judge Dashboard &middot; {new Date().getFullYear()}
           </p>
         </footer>

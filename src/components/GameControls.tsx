@@ -1,7 +1,6 @@
 'use client';
 
 import { useGame } from '@/lib/game-context';
-import { cn } from '@/lib/utils';
 
 export default function GameControls() {
   const { state, startGame, pauseGame, resumeGame, resetGame, endGame } = useGame();
@@ -9,13 +8,19 @@ export default function GameControls() {
   const hasTeams = teams.length >= 2;
 
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] backdrop-blur-md shadow-xl overflow-hidden">
-      <div className="flex items-center justify-between border-b border-[var(--border)] px-5 py-3.5 bg-[var(--bg-card-header)]/50">
-        <h2 className="font-outfit text-sm font-semibold tracking-wide text-[var(--amber)]">
-          Controls
-        </h2>
+    <div className="card-panel corner-ornament">
+      <div className="card-panel-header">
+        <div className="flex items-center gap-2.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--gold)]">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </svg>
+          <h2 className="font-outfit text-xs font-bold uppercase tracking-[0.15em] text-[var(--text)]">
+            Control Panel
+          </h2>
+        </div>
         {status !== 'not-started' && (
-          <span className="font-outfit text-xs font-medium text-[var(--text-dim)] bg-[var(--bg)] px-2 py-0.5 rounded-full border border-[var(--border)]">
+          <span className="font-outfit text-[10px] font-medium text-[var(--text-dim)] bg-[var(--bg)]/50 px-2 py-0.5 rounded border border-[var(--border)]">
             Round {state.round}
           </span>
         )}
@@ -27,21 +32,20 @@ export default function GameControls() {
             <button
               onClick={startGame}
               disabled={!hasTeams}
-              className={cn(
-                'col-span-2 rounded-xl px-4 py-3 font-outfit text-sm font-bold shadow-lg transition-all',
+              className={`col-span-2 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all ${
                 hasTeams
-                  ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-emerald-500/30 hover:scale-[1.02] hover:shadow-emerald-500/50 active:scale-95'
-                  : 'border border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)] shadow-none'
-              )}
+                  ? 'btn-emerald'
+                  : 'border border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)]'
+              }`}
             >
-              Start Game
+              Commence Expedition
             </button>
           )}
 
           {status === 'playing' && (
             <button
               onClick={pauseGame}
-              className="col-span-2 rounded-xl bg-gradient-to-r from-[var(--amber-bg)] to-[var(--amber)] px-4 py-3 font-outfit text-sm font-bold text-white shadow-lg shadow-[var(--amber)]/30 transition-all hover:scale-[1.02] hover:shadow-[var(--amber)]/50 active:scale-95"
+              className="btn-gold col-span-2 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
             >
               Pause
             </button>
@@ -50,7 +54,7 @@ export default function GameControls() {
           {status === 'paused' && (
             <button
               onClick={resumeGame}
-              className="col-span-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-4 py-3 font-outfit text-sm font-bold text-white shadow-lg shadow-emerald-500/30 transition-all hover:scale-[1.02] hover:shadow-emerald-500/50 active:scale-95"
+              className="btn-emerald col-span-2 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
             >
               Resume
             </button>
@@ -59,33 +63,36 @@ export default function GameControls() {
           {(status === 'playing' || status === 'paused') && (
             <button
               onClick={endGame}
-              className="col-span-1 rounded-xl bg-rose-100 dark:bg-rose-900/30 px-4 py-3 font-outfit text-sm font-bold text-rose-600 dark:text-rose-400 shadow-sm transition-all hover:bg-rose-200 dark:hover:bg-rose-900/50 active:scale-95"
+              className="btn-danger col-span-1 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
             >
-              End
+              Conclude
             </button>
           )}
 
           <button
             onClick={resetGame}
-            className="col-span-1 rounded-xl border border-[var(--border)] bg-[var(--bg-card-header)] px-4 py-3 font-outfit text-sm font-bold text-[var(--text-dim)] shadow-sm transition-all hover:bg-[var(--border)] hover:text-[var(--text)] active:scale-95"
+            className="btn-ghost col-span-1 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
           >
             Reset
           </button>
         </div>
 
         {!hasTeams && status === 'not-started' && (
-          <p className="mt-3 text-center font-mono text-[10px] font-bold uppercase tracking-wider text-amber-500/60">
-            Add at least 2 teams
+          <p className="mt-3 text-center font-outfit text-[10px] font-bold uppercase tracking-wider text-[var(--gold)]/60">
+            Register at least 2 teams to begin
           </p>
         )}
 
         {status !== 'not-started' && (
           <div className="mt-4 space-y-3 border-t border-[var(--border)] pt-4">
+            <div className="divider-rune">
+              <span>session status</span>
+            </div>
             <div className="flex items-center justify-between font-outfit text-xs text-[var(--text-dim)]">
               <span>Round <strong className="text-[var(--text)] font-semibold">{state.round}</strong></span>
               <span>
                 Turn:{' '}
-                <strong className="text-[var(--amber)] font-semibold">
+                <strong className="text-[var(--gold)] font-semibold">
                   {state.teams[state.currentTeamIndex]?.name || '-'}
                 </strong>
               </span>
@@ -98,9 +105,9 @@ export default function GameControls() {
                   .map((team) => (
                     <p
                       key={team.id}
-                      className="rounded-lg border border-rose-500/20 bg-rose-50 dark:bg-rose-900/10 px-3 py-2 font-outfit text-xs font-medium text-rose-600 dark:text-rose-400"
+                      className="rounded-lg border border-[var(--crimson)]/20 bg-[var(--crimson)]/5 px-3 py-2 font-outfit text-[11px] font-medium text-[var(--crimson)]"
                     >
-                      ⚠ {team.name} — forced in {3 - team.turnsWithoutRiddle}
+                      ⚡ {team.name} — forced in {3 - team.turnsWithoutRiddle}
                     </p>
                   ))}
               </div>

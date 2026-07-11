@@ -6,12 +6,12 @@ import { useGame } from '@/lib/game-context';
 import { cn } from '@/lib/utils';
 
 const typeStyles: Record<string, string> = {
-  info: 'border-l-4 border-l-blue-400/50 bg-blue-500/5 dark:bg-blue-900/10',
-  success: 'border-l-4 border-l-emerald-500/50 bg-emerald-500/5 dark:bg-emerald-900/10',
-  warning: 'border-l-4 border-l-amber-500/50 bg-amber-500/5 dark:bg-amber-900/10',
-  error: 'border-l-4 border-l-rose-500/50 bg-rose-500/5 dark:bg-rose-900/10',
-  riddle: 'border-l-4 border-l-orange-500/50 bg-orange-500/5 dark:bg-orange-900/10',
-  dice: 'border-l-4 border-l-purple-500/50 bg-purple-500/5 dark:bg-purple-900/10',
+  info: 'border-l-[3px] border-l-blue-500/40',
+  success: 'border-l-[3px] border-l-[var(--emerald)]/50',
+  warning: 'border-l-[3px] border-l-[var(--gold)]/50',
+  error: 'border-l-[3px] border-l-[var(--crimson)]/50',
+  riddle: 'border-l-[3px] border-l-[var(--gold)]/50',
+  dice: 'border-l-[3px] border-l-[var(--violet)]/40',
 };
 
 export default function ActivityLog() {
@@ -19,23 +19,31 @@ export default function ActivityLog() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = 0;
-    }
+    if (containerRef.current) containerRef.current.scrollTop = 0;
   }, [state.log]);
 
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] backdrop-blur-md shadow-xl overflow-hidden">
-      <div className="flex items-center justify-between border-b border-[var(--border)] px-5 py-3.5 bg-[var(--bg-card-header)]/50">
-        <h2 className="font-outfit text-sm font-semibold tracking-wide text-[var(--amber)]">
-          Activity Log
-        </h2>
-        <span className="font-outfit text-xs font-medium text-[var(--text-muted)] bg-[var(--bg)] px-2 py-0.5 rounded-full border border-[var(--border)]">{state.log.length}</span>
+    <div className="card-panel">
+      <div className="card-panel-header">
+        <div className="flex items-center gap-2.5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--gold)]">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          <h2 className="font-outfit text-xs font-bold uppercase tracking-[0.15em] text-[var(--text)]">
+            Chronicle
+          </h2>
+        </div>
+        <span className="font-outfit text-[10px] font-medium text-[var(--text-muted)] bg-[var(--bg)]/50 px-2 py-0.5 rounded border border-[var(--border)]">
+          {state.log.length}
+        </span>
       </div>
 
-      <div ref={containerRef} className="max-h-52 space-y-1.5 overflow-y-auto p-4">
+      <div ref={containerRef} className="max-h-48 space-y-1 overflow-y-auto p-3">
         {state.log.length === 0 && (
-          <p className="py-6 text-center font-mono text-xs text-[var(--text-muted)]">NO ACTIVITY</p>
+          <p className="py-6 text-center font-mono text-[10px] text-[var(--text-muted)]">
+            No entries yet
+          </p>
         )}
         <AnimatePresence initial={false}>
           {state.log.map((entry) => (
@@ -44,16 +52,14 @@ export default function ActivityLog() {
               initial={{ opacity: 0, x: -10, height: 0 }}
               animate={{ opacity: 1, x: 0, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className={cn('px-4 py-2.5 rounded-r-xl', typeStyles[entry.type] || typeStyles.info)}
+              className={cn('px-3 py-2 rounded-r-lg', typeStyles[entry.type] || typeStyles.info)}
             >
-              <span className="font-outfit text-[10px] font-medium text-[var(--text-muted)]">
+              <span className="font-outfit text-[9px] font-medium text-[var(--text-muted)]">
                 {new Date(entry.timestamp).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit',
+                  hour: '2-digit', minute: '2-digit', second: '2-digit',
                 })}
               </span>{' '}
-              <span className="font-outfit text-[12px] font-medium text-[var(--text)]">
+              <span className="font-outfit text-[11px] font-medium text-[var(--text)]">
                 {entry.message}
               </span>
             </motion.div>
