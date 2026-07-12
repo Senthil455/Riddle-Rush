@@ -32,7 +32,7 @@ export default function GameControls() {
             <button
               onClick={startGame}
               disabled={!hasTeams}
-              className={`col-span-2 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all ${
+              className={`col-span-2 rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all ${
                 hasTeams
                   ? 'btn-emerald'
                   : 'border border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)]'
@@ -45,7 +45,7 @@ export default function GameControls() {
           {status === 'playing' && (
             <button
               onClick={pauseGame}
-              className="btn-gold col-span-2 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
+              className="btn-gold col-span-2 rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
             >
               Pause
             </button>
@@ -54,7 +54,7 @@ export default function GameControls() {
           {status === 'paused' && (
             <button
               onClick={resumeGame}
-              className="btn-emerald col-span-2 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
+              className="btn-emerald col-span-2 rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
             >
               Resume
             </button>
@@ -63,7 +63,7 @@ export default function GameControls() {
           {(status === 'playing' || status === 'paused') && (
             <button
               onClick={endGame}
-              className="btn-danger col-span-1 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
+              className="btn-danger col-span-1 rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
             >
               Conclude
             </button>
@@ -71,7 +71,7 @@ export default function GameControls() {
 
           <button
             onClick={resetGame}
-            className="btn-ghost col-span-1 rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
+            className="btn-ghost col-span-1 rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
           >
             Reset
           </button>

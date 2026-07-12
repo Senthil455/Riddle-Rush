@@ -39,8 +39,8 @@ function DiceFace({ value, transform }: { value: number; transform: string }) {
       className="absolute inset-0 flex items-center justify-center"
       style={{ transform, backfaceVisibility: 'hidden' }}
     >
-      <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-ivory-100 to-ivory-200 dark:from-zinc-800 dark:to-zinc-900 shadow-xl border border-white/50 dark:border-white/10">
-        <div className="absolute inset-1 rounded-xl border border-black/5 dark:border-black/20 bg-white/50 dark:bg-black/20">
+      <div className="relative h-full w-full rounded-lg bg-gradient-to-br from-ivory-100 to-ivory-200 dark:from-zinc-800 dark:to-zinc-900 shadow-xl border border-white/50 dark:border-white/10">
+        <div className="absolute inset-1 rounded-lg border border-black/5 dark:border-black/20 bg-white/50 dark:bg-black/20">
           {dots.map(([cx, cy], i) => (
             <div
               key={i}
@@ -140,7 +140,7 @@ export default function VirtualDice() {
           <button
             onClick={rollDice}
             disabled={!canRoll}
-            className={`w-full rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all ${
+            className={`w-full rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all ${
               canRoll
                 ? 'btn-gold'
                 : 'border border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)]'
@@ -155,7 +155,7 @@ export default function VirtualDice() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             onClick={() => nextTurn()}
-            className="btn-emerald w-full rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
+            className="btn-emerald w-full rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider"
           >
             Next Turn →
           </motion.button>

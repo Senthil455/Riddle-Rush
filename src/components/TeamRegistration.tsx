@@ -54,7 +54,7 @@ export default function TeamRegistration() {
         {!isDisabled && (
           <button
             onClick={() => { resetForm(); setShowForm(!showForm); }}
-            className="btn-ghost mb-4 w-full rounded-xl px-4 py-2.5 font-outfit text-xs font-bold uppercase tracking-wider"
+            className="btn-ghost mb-4 w-full rounded-lg px-4 py-2.5 font-outfit text-xs font-bold uppercase tracking-wider"
           >
             {showForm ? 'Cancel' : '+ Add Team'}
           </button>
@@ -110,7 +110,7 @@ export default function TeamRegistration() {
                   />
                 </div>
               </div>
-              <button type="submit" className="btn-gold mt-2 w-full rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider">
+              <button type="submit" className="btn-gold mt-2 w-full rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider">
                 {editingId ? 'Update Registry' : 'Register Team'}
               </button>
             </motion.form>

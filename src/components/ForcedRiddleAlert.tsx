@@ -33,7 +33,7 @@ export default function ForcedRiddleAlert() {
             exit={{ opacity: 0, y: -50 }}
             className="fixed left-1/2 top-6 z-40 -translate-x-1/2"
           >
-            <div className="flex items-center gap-4 rounded-xl border-2 border-[var(--crimson)]/30 bg-[var(--bg-card)] shadow-xl shadow-[var(--crimson)]/10 px-5 py-3.5">
+            <div className="flex items-center gap-4 rounded-lg border-2 border-[var(--crimson)]/30 bg-[var(--bg-card)] shadow-xl shadow-[var(--crimson)]/10 px-5 py-3.5">
               <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-[var(--crimson)]/10 text-lg">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-[var(--crimson)]">
                   <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />

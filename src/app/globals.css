@@ -6,23 +6,23 @@
 }
 
 :root {
-  --bg: #f8f4ef;
-  --bg-card: rgba(255, 250, 240, 0.85);
-  --bg-card-header: rgba(249, 240, 225, 0.7);
+  --bg: #f5f0e8;
+  --bg-card: rgba(255, 250, 240, 0.8);
+  --bg-card-header: rgba(245, 238, 225, 0.6);
   --bg-input: rgba(255, 250, 240, 0.9);
-  --border: rgba(180, 150, 110, 0.25);
-  --border-hover: rgba(180, 150, 110, 0.4);
-  --text: #2c1810;
-  --text-dim: #7a5a3a;
-  --text-muted: #a08560;
-  --gold: #b8860b;
-  --gold-bg: #d4a030;
+  --border: rgba(160, 130, 90, 0.2);
+  --border-hover: rgba(160, 130, 90, 0.35);
+  --text: #1a120e;
+  --text-dim: #6a4e2e;
+  --text-muted: #9a7b55;
+  --gold: #a67c00;
+  --gold-bg: #c48f1a;
   --emerald: #2d6a4f;
   --emerald-bg: #40916c;
   --crimson: #9b2226;
   --violet: #5a189a;
-  --shadow: rgba(100, 70, 40, 0.08);
-  --shadow-strong: rgba(100, 70, 40, 0.15);
+  --shadow: rgba(100, 60, 30, 0.06);
+  --shadow-strong: rgba(100, 60, 30, 0.12);
 }
 
 .dark {
@@ -69,25 +69,20 @@ body {
   border-radius: 10px;
 }
 
+/* Background layers */
 .bg-texture {
   position: fixed;
   inset: 0;
   z-index: 0;
-  opacity: 0.4;
+  opacity: 0.3;
   background-image:
     repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(180, 150, 110, 0.03) 2px,
-      rgba(180, 150, 110, 0.03) 4px
+      0deg, transparent, transparent 2px,
+      rgba(160, 130, 90, 0.04) 2px, rgba(160, 130, 90, 0.04) 4px
     ),
     repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 3px,
-      rgba(180, 150, 110, 0.02) 3px,
-      rgba(180, 150, 110, 0.02) 6px
+      90deg, transparent, transparent 3px,
+      rgba(160, 130, 90, 0.03) 3px, rgba(160, 130, 90, 0.03) 6px
     );
 }
 
@@ -96,22 +91,26 @@ body {
   inset: 0;
   z-index: 0;
   background-image:
+    radial-gradient(ellipse 80% 60% at 20% 30%, hsla(35, 50%, 60%, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 80% 20%, hsla(270, 30%, 50%, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 50% 80%, hsla(140, 30%, 40%, 0.05) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+.dark .bg-atmosphere {
+  background-image:
     radial-gradient(ellipse 80% 60% at 20% 30%, hsla(35, 60%, 50%, 0.08) 0%, transparent 60%),
     radial-gradient(ellipse 60% 70% at 80% 20%, hsla(270, 40%, 40%, 0.06) 0%, transparent 60%),
     radial-gradient(ellipse 70% 40% at 50% 80%, hsla(140, 30%, 30%, 0.05) 0%, transparent 60%),
     radial-gradient(ellipse 40% 50% at 70% 60%, hsla(0, 60%, 40%, 0.04) 0%, transparent 50%);
-  background-attachment: fixed;
 }
 
-/* Card variants for visual hierarchy */
+/* Card variants */
 .card-panel {
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--bg-card);
-  box-shadow:
-    0 1px 3px var(--shadow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px var(--shadow);
   overflow: hidden;
 }
 
@@ -119,32 +118,39 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: 10px 16px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-card-header);
 }
 
 .card-scroll {
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid var(--border);
-  background:
-    linear-gradient(180deg, var(--bg-card) 0%, rgba(40, 32, 24, 0.6) 100%);
-  box-shadow:
-    0 4px 16px var(--shadow),
-    inset 0 0 0 1px rgba(180, 150, 110, 0.06);
+  background: var(--bg-card);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .card-journal {
-  border-radius: 4px 16px 16px 4px;
+  border-radius: 3px 12px 12px 3px;
   border-left: 3px solid var(--gold);
   border-top: 1px solid var(--border);
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: var(--bg-card);
-  box-shadow: 0 2px 8px var(--shadow);
+  box-shadow: 0 1px 4px var(--shadow);
 }
 
-/* Decorative corner ornaments */
+/* Dice tray */
+.dice-tray {
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow:
+    inset 0 1px 4px var(--shadow),
+    0 2px 8px var(--shadow);
+}
+
+/* Corner ornaments (sharper) */
 .corner-ornament {
   position: relative;
 }
@@ -152,25 +158,25 @@ body {
 .corner-ornament::after {
   content: '';
   position: absolute;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   border-color: var(--gold);
-  opacity: 0.3;
+  opacity: 0.35;
 }
 .corner-ornament::before {
-  top: 6px;
-  left: 6px;
-  border-top: 1px solid;
-  border-left: 1px solid;
+  top: 4px;
+  left: 4px;
+  border-top: 2px solid;
+  border-left: 2px solid;
 }
 .corner-ornament::after {
-  bottom: 6px;
-  right: 6px;
-  border-bottom: 1px solid;
-  border-right: 1px solid;
+  bottom: 4px;
+  right: 4px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
 }
 
-/* Decorative divider */
+/* Divider */
 .divider-rune {
   display: flex;
   align-items: center;
@@ -187,43 +193,31 @@ body {
   flex: 1;
   height: 1px;
   background: linear-gradient(
-    90deg,
-    transparent,
-    var(--border-hover) 30%,
-    var(--border-hover) 70%,
-    transparent
+    90deg, transparent, var(--border-hover) 30%, var(--border-hover) 70%, transparent
   );
 }
 
-/* Button variants */
+/* Buttons - sharper, mode-aware */
 .btn-gold {
   background: linear-gradient(135deg, var(--gold-bg), var(--gold));
   color: #fff;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
-  transition: all 0.2s;
+  box-shadow: 0 3px 8px color-mix(in srgb, var(--gold) 30%, transparent);
+  transition: all 0.15s;
 }
 .btn-gold:hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 20px rgba(184, 134, 11, 0.4);
-}
-.btn-gold:active {
-  transform: scale(0.97);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--gold) 40%, transparent);
 }
 
 .btn-emerald {
   background: linear-gradient(135deg, var(--emerald-bg), var(--emerald));
   color: #fff;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
-  transition: all 0.2s;
+  box-shadow: 0 3px 8px color-mix(in srgb, var(--emerald) 30%, transparent);
+  transition: all 0.15s;
 }
 .btn-emerald:hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 20px rgba(45, 106, 79, 0.4);
-}
-.btn-emerald:active {
-  transform: scale(0.97);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--emerald) 40%, transparent);
 }
 
 .btn-ghost {
@@ -231,7 +225,7 @@ body {
   background: var(--bg-card-header);
   color: var(--text-dim);
   font-weight: 600;
-  transition: all 0.2s;
+  transition: all 0.15s;
 }
 .btn-ghost:hover {
   background: var(--border);
@@ -239,50 +233,38 @@ body {
 }
 
 .btn-danger {
-  background: rgba(155, 34, 38, 0.1);
+  background: color-mix(in srgb, var(--crimson) 8%, transparent);
   color: var(--crimson);
   font-weight: 600;
-  border: 1px solid rgba(155, 34, 38, 0.2);
-  transition: all 0.2s;
+  border: 1px solid color-mix(in srgb, var(--crimson) 20%, transparent);
+  transition: all 0.15s;
 }
 .btn-danger:hover {
-  background: rgba(155, 34, 38, 0.2);
+  background: color-mix(in srgb, var(--crimson) 16%, transparent);
 }
 
-/* Input styling */
+/* Input fields */
 .input-field {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid var(--border);
   background: var(--bg-input);
-  padding: 10px 16px;
+  padding: 10px 14px;
   font-family: var(--font-outfit);
   font-size: 14px;
   color: var(--text);
   outline: none;
-  transition: all 0.2s;
+  transition: all 0.15s;
 }
 .input-field::placeholder {
   color: var(--text-muted);
 }
 .input-field:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold) 15%, transparent);
 }
 
-/* Dice tray */
-.dice-tray {
-  border-radius: 16px;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(40, 32, 24, 0.4) 0%, transparent 60%),
-    linear-gradient(180deg, rgba(60, 48, 36, 0.3) 0%, transparent 100%);
-  border: 1px solid var(--border);
-  box-shadow:
-    inset 0 2px 8px rgba(0, 0, 0, 0.2),
-    0 4px 16px var(--shadow);
-}
-
-/* Cell styles for game board */
+/* Board cells */
 .cell-start {
   background: linear-gradient(135deg, #2d6a4f, #40916c);
   border-color: rgba(45, 106, 79, 0.5);
@@ -296,31 +278,31 @@ body {
   border-color: var(--border);
 }
 .cell-easy {
-  background: linear-gradient(135deg, rgba(184, 134, 11, 0.12), rgba(212, 160, 48, 0.08));
-  border-color: rgba(184, 134, 11, 0.3);
+  background: color-mix(in srgb, var(--gold) 8%, var(--bg-input));
+  border-color: color-mix(in srgb, var(--gold) 25%, transparent);
 }
 .cell-medium {
-  background: linear-gradient(135deg, rgba(212, 160, 48, 0.15), rgba(184, 134, 11, 0.1));
-  border-color: rgba(212, 160, 48, 0.35);
+  background: color-mix(in srgb, var(--gold) 12%, var(--bg-input));
+  border-color: color-mix(in srgb, #d4a030 30%, transparent);
 }
 .cell-hard {
-  background: linear-gradient(135deg, rgba(155, 34, 38, 0.12), rgba(230, 57, 70, 0.08));
-  border-color: rgba(155, 34, 38, 0.3);
+  background: color-mix(in srgb, var(--crimson) 8%, var(--bg-input));
+  border-color: color-mix(in srgb, var(--crimson) 25%, transparent);
 }
 
-/* Riddle difficulty badges */
+/* Riddle badges */
 .badge-easy {
-  background: rgba(184, 134, 11, 0.15);
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
   color: var(--gold);
-  border: 1px solid rgba(184, 134, 11, 0.3);
+  border: 1px solid color-mix(in srgb, var(--gold) 25%, transparent);
 }
 .badge-medium {
-  background: rgba(212, 160, 48, 0.15);
+  background: color-mix(in srgb, #d4a030 12%, transparent);
   color: #d4a030;
-  border: 1px solid rgba(212, 160, 48, 0.3);
+  border: 1px solid color-mix(in srgb, #d4a030 25%, transparent);
 }
 .badge-hard {
-  background: rgba(155, 34, 38, 0.15);
+  background: color-mix(in srgb, var(--crimson) 12%, transparent);
   color: var(--crimson);
-  border: 1px solid rgba(155, 34, 38, 0.3);
+  border: 1px solid color-mix(in srgb, var(--crimson) 25%, transparent);
 }

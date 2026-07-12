@@ -44,7 +44,7 @@ export default function RiddlePanel() {
         initial={{ scale: 0.95, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.95, y: 20, opacity: 0 }}
-        className={`w-full max-w-lg rounded-xl border-2 ${config.border} bg-[var(--bg-card)] shadow-2xl relative overflow-hidden`}
+        className={`w-full max-w-lg rounded-lg border-2 ${config.border} bg-[var(--bg-card)] shadow-2xl relative overflow-hidden`}
       >
         <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-[var(--gold)]/5 to-transparent pointer-events-none" />
 
@@ -119,7 +119,7 @@ export default function RiddlePanel() {
             <button
               onClick={handleSubmit}
               disabled={!selectedAnswer}
-              className={`mt-5 w-full rounded-xl px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all ${
+              className={`mt-5 w-full rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all ${
                 selectedAnswer
                   ? 'btn-gold'
                   : 'border border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)]'

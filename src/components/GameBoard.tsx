@@ -31,7 +31,7 @@ function BoardCellView({ cellIndex }: { cellIndex: number }) {
     <div
       className={cn(
         'relative flex flex-col items-center justify-center border-2 transition-all duration-300',
-        isSpecial ? 'col-span-2 row-span-2 rounded-xl' : 'rounded-lg',
+        isSpecial ? 'col-span-2 row-span-2 rounded-lg' : 'rounded-lg',
         style.css,
         isSpecial ? 'shadow-lg' : 'shadow-sm hover:shadow-md hover:z-10',
       )}
