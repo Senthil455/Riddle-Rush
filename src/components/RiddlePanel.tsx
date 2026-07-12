@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useGame } from '@/lib/game-context';
+import { cn } from '@/lib/utils';
 
 const difficultyConfig = {
   easy: { label: 'Apprentice', border: 'border-[var(--gold)]/40', dot: 'bg-[var(--gold)]' },
@@ -44,20 +45,20 @@ export default function RiddlePanel() {
         initial={{ scale: 0.95, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.95, y: 20, opacity: 0 }}
-        className={`w-full max-w-lg rounded-lg border-2 ${config.border} bg-[var(--bg-card)] shadow-2xl relative overflow-hidden`}
+        className={cn('w-full max-w-lg rounded-lg border-2 bg-[var(--bg-card)] shadow-2xl relative overflow-hidden', config.border)}
       >
         <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-[var(--gold)]/5 to-transparent pointer-events-none" />
 
-        <div className={`flex items-center justify-between border-b ${config.border} px-5 py-3.5 bg-[var(--bg-card-header)]`}>
+        <div className={cn('flex items-center justify-between border-b px-5 py-3.5 bg-[var(--bg-card-header)]', config.border)}>
           <div className="flex items-center gap-3">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--gold)]">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[var(--gold)]">
               <circle cx="12" cy="12" r="10" />
               <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
               <path d="M12 17h.01" />
             </svg>
             <span className="font-outfit text-sm font-bold text-[var(--text)]">{team?.name}</span>
           </div>
-          <span className={`font-outfit text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded border ${config.border} bg-[var(--bg-input)]`}>
+          <span className={cn('font-outfit text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded border bg-[var(--bg-input)]', config.border)}>
             {config.label}
           </span>
         </div>
@@ -83,14 +84,14 @@ export default function RiddlePanel() {
               if (reveal) {
                 if (isRight) {
                   border = 'border-[var(--emerald)]/60';
-                  bg = 'bg-[var(--emerald)]/5';
+                  bg = 'bg-[var(--emerald-glow)]';
                 } else if (isSelected && !isRight) {
                   border = 'border-[var(--crimson)]/60';
-                  bg = 'bg-[var(--crimson)]/5';
+                  bg = 'bg-[var(--crimson-glow)]';
                 }
               } else if (isSelected) {
                 border = 'border-[var(--gold)]/60';
-                bg = 'bg-[var(--gold)]/5';
+                bg = 'bg-[var(--gold-glow)]';
               }
 
               return (
@@ -98,12 +99,14 @@ export default function RiddlePanel() {
                   key={option}
                   onClick={() => { if (!showResult) setSelectedAnswer(option); }}
                   disabled={showResult}
-                  className={`w-full rounded-lg border-2 px-4 py-3 text-left text-sm font-medium text-[var(--text)] transition-all duration-200 ${border} ${bg}`}
+                  className={cn('w-full rounded-lg border-2 px-4 py-3 text-left text-sm font-medium text-[var(--text)] transition-all duration-200', border, bg)}
                 >
                   <div className="flex items-center gap-3">
-                    <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border text-[8px] font-bold ${
-                      isSelected ? 'border-[var(--gold)] bg-[var(--gold)] text-white' : 'border-[var(--border)] bg-[var(--bg)] text-transparent'
-                    }`}>
+                    <span className={cn('flex h-4 w-4 shrink-0 items-center justify-center rounded-full border text-[8px] font-bold transition-all',
+                      isSelected
+                        ? 'border-[var(--gold)] bg-[var(--gold)] text-white'
+                        : 'border-[var(--border)] text-transparent'
+                    )}>
                       ✓
                     </span>
                     <span className="font-outfit text-sm">{option}</span>
@@ -119,11 +122,12 @@ export default function RiddlePanel() {
             <button
               onClick={handleSubmit}
               disabled={!selectedAnswer}
-              className={`mt-5 w-full rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all ${
+              className={cn(
+                'mt-5 w-full rounded-lg px-4 py-3 font-outfit text-xs font-bold uppercase tracking-wider transition-all',
                 selectedAnswer
                   ? 'btn-gold'
                   : 'border border-[var(--border)] bg-[var(--bg-card-header)] text-[var(--text-muted)]'
-              }`}
+              )}
             >
               Submit Answer
             </button>
@@ -131,13 +135,14 @@ export default function RiddlePanel() {
             <motion.div
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              className={`mt-5 rounded-lg border-2 p-4 text-center ${
+              className={cn(
+                'mt-5 rounded-lg border-2 p-4 text-center',
                 isCorrect
-                  ? 'border-[var(--emerald)]/40 bg-[var(--emerald)]/5'
-                  : 'border-[var(--crimson)]/40 bg-[var(--crimson)]/5'
-              }`}
+                  ? 'border-[var(--emerald)]/40 bg-[var(--emerald-glow)]'
+                  : 'border-[var(--crimson)]/40 bg-[var(--crimson-glow)]'
+              )}
             >
-              <p className={`font-outfit text-lg font-bold ${isCorrect ? 'text-[var(--emerald)]' : 'text-[var(--crimson)]'}`}>
+              <p className={cn('font-outfit text-lg font-bold', isCorrect ? 'text-[var(--emerald)]' : 'text-[var(--crimson)]')}>
                 {isCorrect ? '✦ Correct!' : '✗ Incorrect'}
               </p>
               <p className="mt-1.5 font-outfit text-xs font-medium text-[var(--text-dim)]">

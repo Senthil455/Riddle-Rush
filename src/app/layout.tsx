@@ -25,10 +25,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${jetbrainsMono.variable} h-full antialiased dark`}
+      className={`${outfit.variable} ${jetbrainsMono.variable} h-full dark`}
       suppressHydrationWarning
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full antialiased">{children}</body>
     </html>
   );
 }

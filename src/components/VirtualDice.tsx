@@ -39,12 +39,12 @@ function DiceFace({ value, transform }: { value: number; transform: string }) {
       className="absolute inset-0 flex items-center justify-center"
       style={{ transform, backfaceVisibility: 'hidden' }}
     >
-      <div className="relative h-full w-full rounded-lg bg-gradient-to-br from-ivory-100 to-ivory-200 dark:from-zinc-800 dark:to-zinc-900 shadow-xl border border-white/50 dark:border-white/10">
-        <div className="absolute inset-1 rounded-lg border border-black/5 dark:border-black/20 bg-white/50 dark:bg-black/20">
+      <div className="relative h-full w-full rounded-lg bg-gradient-to-br from-zinc-700 to-zinc-900 shadow-xl border border-white/5">
+        <div className="absolute inset-1 rounded-lg border border-black/20 bg-black/30">
           {dots.map(([cx, cy], i) => (
             <div
               key={i}
-              className="absolute h-3 w-3 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 dark:from-gray-300 dark:to-gray-100 -translate-x-1/2 -translate-y-1/2 shadow-inner"
+              className="absolute h-3 w-3 rounded-full bg-gradient-to-br from-zinc-300 to-zinc-100 -translate-x-1/2 -translate-y-1/2 shadow-inner"
               style={{ left: `${cx}%`, top: `${cy}%` }}
             />
           ))}
@@ -99,7 +99,7 @@ export default function VirtualDice() {
     <div className="dice-tray corner-ornament">
       <div className="card-panel-header">
         <div className="flex items-center gap-2.5">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--gold)]">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[var(--gold)]">
             <rect x="2" y="2" width="20" height="20" rx="3" />
             <circle cx="8" cy="8" r="1.5" fill="currentColor" />
             <circle cx="16" cy="16" r="1.5" fill="currentColor" />
@@ -109,7 +109,7 @@ export default function VirtualDice() {
           </h2>
         </div>
         {teams.length > 0 && currentTeam && (
-          <span className="font-outfit text-[10px] font-medium text-[var(--text-dim)] bg-[var(--bg)]/50 px-2 py-0.5 rounded border border-[var(--border)]">
+          <span className="font-outfit text-[10px] font-medium text-[var(--text-dim)] px-2 py-0.5 rounded border border-[var(--border)]">
             {currentTeam.name}
           </span>
         )}

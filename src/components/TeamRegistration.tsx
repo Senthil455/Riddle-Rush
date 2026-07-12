@@ -45,7 +45,7 @@ export default function TeamRegistration() {
         <h2 className="font-outfit text-xs font-bold uppercase tracking-[0.15em] text-[var(--gold)]">
           Registry
         </h2>
-        <span className="font-outfit text-[10px] font-medium text-[var(--text-muted)] bg-[var(--bg)]/50 px-2 py-0.5 rounded border border-[var(--border)]">
+        <span className="font-outfit text-[10px] font-medium text-[var(--text-muted)] px-2 py-0.5 rounded border border-[var(--border)]">
           {state.teams.length}/6
         </span>
       </div>

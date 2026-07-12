@@ -15,10 +15,10 @@ export default function Leaderboard() {
   }, [state.teams]);
 
   return (
-    <div className="card-scroll corner-ornament">
+    <div className="card-panel corner-ornament">
       <div className="card-panel-header">
         <div className="flex items-center gap-2.5">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--gold)]">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[var(--gold)]">
             <circle cx="12" cy="8" r="6" />
             <path d="M15.5 13.5L18 21l-6-3-6 3 2.5-7.5" />
           </svg>
@@ -27,7 +27,7 @@ export default function Leaderboard() {
           </h2>
         </div>
         {state.teams.length > 0 && (
-          <span className="font-outfit text-[10px] font-medium text-[var(--text-muted)] bg-[var(--bg)]/50 px-2 py-0.5 rounded border border-[var(--border)]">
+          <span className="font-outfit text-[10px] font-medium text-[var(--text-muted)] px-2 py-0.5 rounded border border-[var(--border)]">
             {state.teams.length} listed
           </span>
         )}
@@ -88,7 +88,7 @@ export default function Leaderboard() {
                   <motion.div
                     animate={{ opacity: [1, 0.4, 1] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                    className="rounded border border-[var(--gold)]/30 bg-[var(--gold)]/10 px-2 py-0.5 font-outfit text-[9px] font-bold uppercase tracking-wider text-[var(--gold)]"
+                    className="rounded border border-[var(--gold)]/30 bg-[var(--gold-glow)] px-2 py-0.5 font-outfit text-[9px] font-bold uppercase tracking-wider text-[var(--gold)]"
                   >
                     Turn
                   </motion.div>

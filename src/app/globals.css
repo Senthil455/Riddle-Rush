@@ -7,54 +7,59 @@
 
 :root {
   --bg: #f5f0e8;
-  --bg-card: rgba(255, 250, 240, 0.8);
+  --bg-card: rgba(255, 250, 240, 0.85);
   --bg-card-header: rgba(245, 238, 225, 0.6);
   --bg-input: rgba(255, 250, 240, 0.9);
-  --border: rgba(160, 130, 90, 0.2);
-  --border-hover: rgba(160, 130, 90, 0.35);
-  --text: #1a120e;
+  --border: rgba(140, 115, 85, 0.18);
+  --border-hover: rgba(140, 115, 85, 0.35);
+  --border-strong: rgba(140, 115, 85, 0.28);
+  --text: #1a1512;
   --text-dim: #6a4e2e;
   --text-muted: #9a7b55;
   --gold: #a67c00;
   --gold-bg: #c48f1a;
+  --gold-glow: rgba(166, 124, 0, 0.1);
   --emerald: #2d6a4f;
-  --emerald-bg: #40916c;
+  --emerald-glow: rgba(45, 106, 79, 0.08);
   --crimson: #9b2226;
+  --crimson-glow: rgba(155, 34, 38, 0.08);
   --violet: #5a189a;
-  --shadow: rgba(100, 60, 30, 0.06);
-  --shadow-strong: rgba(100, 60, 30, 0.12);
+  --shadow-card: 0 2px 8px rgba(100, 60, 30, 0.08), 0 1px 2px rgba(100, 60, 30, 0.04);
+  --shadow-card-hover: 0 4px 16px rgba(100, 60, 30, 0.14), 0 2px 4px rgba(100, 60, 30, 0.06);
 }
 
 .dark {
-  --bg: #1a1410;
-  --bg-card: rgba(36, 28, 22, 0.85);
-  --bg-card-header: rgba(50, 38, 28, 0.6);
-  --bg-input: rgba(50, 38, 28, 0.9);
-  --border: rgba(180, 150, 110, 0.15);
-  --border-hover: rgba(180, 150, 110, 0.3);
-  --text: #f0e6d3;
-  --text-dim: #b8a080;
-  --text-muted: #7a6040;
-  --gold: #e8b830;
-  --gold-bg: #c99520;
-  --emerald: #52b788;
-  --emerald-bg: #40916c;
-  --crimson: #e63946;
-  --violet: #9d4edd;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-strong: rgba(0, 0, 0, 0.5);
+  --bg: #1a1512;
+  --bg-card: rgba(30, 25, 20, 0.92);
+  --bg-card-header: rgba(38, 31, 26, 0.8);
+  --bg-input: rgba(40, 33, 27, 0.9);
+  --border: rgba(140, 115, 85, 0.15);
+  --border-hover: rgba(140, 115, 85, 0.3);
+  --border-strong: rgba(140, 115, 85, 0.25);
+  --text: #e8ddd0;
+  --text-dim: #b8a898;
+  --text-muted: #7a6a5a;
+  --gold: #c99520;
+  --gold-bg: #a67c00;
+  --gold-glow: rgba(201, 149, 32, 0.08);
+  --emerald: #40916c;
+  --emerald-glow: rgba(64, 145, 108, 0.08);
+  --crimson: #c1121f;
+  --crimson-glow: rgba(193, 18, 31, 0.08);
+  --violet: #7b2cbf;
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.3);
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-outfit), system-ui, sans-serif;
-  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 ::selection {
-  background: var(--gold);
-  color: #fff;
+  background: var(--gold-glow);
+  color: var(--text);
 }
 
 * {
@@ -62,27 +67,27 @@ body {
   scrollbar-color: var(--border-hover) transparent;
 }
 
-*::-webkit-scrollbar { width: 6px; }
+*::-webkit-scrollbar { width: 5px; }
 *::-webkit-scrollbar-track { background: transparent; }
 *::-webkit-scrollbar-thumb {
   background: var(--border-hover);
   border-radius: 10px;
 }
 
-/* Background layers */
+/* ── Background layers ── */
 .bg-texture {
   position: fixed;
   inset: 0;
   z-index: 0;
-  opacity: 0.3;
+  opacity: 0.25;
   background-image:
     repeating-linear-gradient(
       0deg, transparent, transparent 2px,
-      rgba(160, 130, 90, 0.04) 2px, rgba(160, 130, 90, 0.04) 4px
+      rgba(140, 115, 85, 0.04) 2px, rgba(140, 115, 85, 0.04) 4px
     ),
     repeating-linear-gradient(
       90deg, transparent, transparent 3px,
-      rgba(160, 130, 90, 0.03) 3px, rgba(160, 130, 90, 0.03) 6px
+      rgba(140, 115, 85, 0.03) 3px, rgba(140, 115, 85, 0.03) 6px
     );
 }
 
@@ -91,27 +96,30 @@ body {
   inset: 0;
   z-index: 0;
   background-image:
-    radial-gradient(ellipse 80% 60% at 20% 30%, hsla(35, 50%, 60%, 0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 70% at 80% 20%, hsla(270, 30%, 50%, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 40% at 50% 80%, hsla(140, 30%, 40%, 0.05) 0%, transparent 60%);
+    radial-gradient(ellipse 70% 50% at 20% 30%, hsla(35, 50%, 70%, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, hsla(270, 30%, 60%, 0.06) 0%, transparent 60%);
   background-attachment: fixed;
 }
 
 .dark .bg-atmosphere {
   background-image:
-    radial-gradient(ellipse 80% 60% at 20% 30%, hsla(35, 60%, 50%, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 70% at 80% 20%, hsla(270, 40%, 40%, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 40% at 50% 80%, hsla(140, 30%, 30%, 0.05) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 50% at 70% 60%, hsla(0, 60%, 40%, 0.04) 0%, transparent 50%);
+    radial-gradient(ellipse 70% 50% at 20% 30%, hsla(35, 30%, 30%, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, hsla(270, 20%, 20%, 0.05) 0%, transparent 60%);
 }
 
-/* Card variants */
+/* ── Card variants ── */
 .card-panel {
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--bg-card);
-  box-shadow: 0 1px 3px var(--shadow);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card-panel:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .card-panel-header {
@@ -123,34 +131,30 @@ body {
   background: var(--bg-card-header);
 }
 
-.card-scroll {
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  box-shadow: 0 2px 8px var(--shadow);
+.card-panel-body {
+  padding: 14px;
 }
 
+/* Journal card — left gold accent */
 .card-journal {
-  border-radius: 3px 12px 12px 3px;
+  border-radius: 3px 10px 10px 3px;
   border-left: 3px solid var(--gold);
-  border-top: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--border-strong);
+  border-right: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
   background: var(--bg-card);
-  box-shadow: 0 1px 4px var(--shadow);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s;
 }
 
-/* Dice tray */
-.dice-tray {
-  border-radius: 12px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  box-shadow:
-    inset 0 1px 4px var(--shadow),
-    0 2px 8px var(--shadow);
+.card-journal:hover {
+  border-left-color: var(--gold-bg);
+  border-top-color: var(--border-hover);
+  border-right-color: var(--border-hover);
+  border-bottom-color: var(--border-hover);
 }
 
-/* Corner ornaments (sharper) */
+/* ── Corner ornaments ── */
 .corner-ornament {
   position: relative;
 }
@@ -161,31 +165,32 @@ body {
   width: 12px;
   height: 12px;
   border-color: var(--gold);
-  opacity: 0.35;
+  opacity: 0.3;
+  pointer-events: none;
 }
 .corner-ornament::before {
-  top: 4px;
-  left: 4px;
-  border-top: 2px solid;
-  border-left: 2px solid;
+  top: 5px;
+  left: 5px;
+  border-top: 1.5px solid;
+  border-left: 1.5px solid;
 }
 .corner-ornament::after {
-  bottom: 4px;
-  right: 4px;
-  border-bottom: 2px solid;
-  border-right: 2px solid;
+  bottom: 5px;
+  right: 5px;
+  border-bottom: 1.5px solid;
+  border-right: 1.5px solid;
 }
 
-/* Divider */
+/* ── Rune divider ── */
 .divider-rune {
   display: flex;
   align-items: center;
   gap: 8px;
   color: var(--text-muted);
-  font-size: 10px;
-  letter-spacing: 0.15em;
+  font-size: 9px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 .divider-rune::before,
 .divider-rune::after {
@@ -197,56 +202,76 @@ body {
   );
 }
 
-/* Buttons - sharper, mode-aware */
+/* ── Buttons ── */
 .btn-gold {
   background: linear-gradient(135deg, var(--gold-bg), var(--gold));
   color: #fff;
   font-weight: 700;
-  box-shadow: 0 3px 8px color-mix(in srgb, var(--gold) 30%, transparent);
+  box-shadow: 0 2px 8px var(--gold-glow);
   transition: all 0.15s;
 }
 .btn-gold:hover {
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--gold) 40%, transparent);
+  box-shadow: 0 4px 14px rgba(201, 149, 32, 0.25);
+  transform: translateY(-1px);
+}
+.btn-gold:active {
+  transform: translateY(0);
+}
+.btn-gold:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .btn-emerald {
-  background: linear-gradient(135deg, var(--emerald-bg), var(--emerald));
+  background: linear-gradient(135deg, #2d6a4f, var(--emerald));
   color: #fff;
   font-weight: 700;
-  box-shadow: 0 3px 8px color-mix(in srgb, var(--emerald) 30%, transparent);
+  box-shadow: 0 2px 8px var(--emerald-glow);
   transition: all 0.15s;
 }
 .btn-emerald:hover {
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--emerald) 40%, transparent);
+  box-shadow: 0 4px 14px rgba(64, 145, 108, 0.25);
+  transform: translateY(-1px);
+}
+.btn-emerald:active {
+  transform: translateY(0);
+}
+.btn-emerald:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .btn-ghost {
   border: 1px solid var(--border);
-  background: var(--bg-card-header);
+  background: transparent;
   color: var(--text-dim);
   font-weight: 600;
   transition: all 0.15s;
 }
 .btn-ghost:hover {
-  background: var(--border);
+  background: var(--bg-card-header);
+  border-color: var(--border-hover);
   color: var(--text);
 }
 
 .btn-danger {
-  background: color-mix(in srgb, var(--crimson) 8%, transparent);
+  background: rgba(193, 18, 31, 0.08);
   color: var(--crimson);
   font-weight: 600;
-  border: 1px solid color-mix(in srgb, var(--crimson) 20%, transparent);
+  border: 1px solid rgba(193, 18, 31, 0.2);
   transition: all 0.15s;
 }
 .btn-danger:hover {
-  background: color-mix(in srgb, var(--crimson) 16%, transparent);
+  background: rgba(193, 18, 31, 0.15);
+  border-color: rgba(193, 18, 31, 0.35);
 }
 
-/* Input fields */
+/* ── Input fields ── */
 .input-field {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid var(--border);
   background: var(--bg-input);
   padding: 10px 14px;
@@ -261,48 +286,69 @@ body {
 }
 .input-field:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold) 15%, transparent);
+  box-shadow: 0 0 0 2px rgba(201, 149, 32, 0.12);
 }
 
-/* Board cells */
+/* ── Board cells ── */
 .cell-start {
-  background: linear-gradient(135deg, #2d6a4f, #40916c);
-  border-color: rgba(45, 106, 79, 0.5);
+  background: linear-gradient(135deg, #1a3a2a, #2d6a4f);
+  border-color: rgba(45, 106, 79, 0.4);
 }
 .cell-end {
-  background: linear-gradient(135deg, #5a189a, #7b2cbf);
-  border-color: rgba(90, 24, 154, 0.5);
+  background: linear-gradient(135deg, #2a1040, #5a189a);
+  border-color: rgba(90, 24, 154, 0.4);
 }
 .cell-regular {
   background: var(--bg-input);
   border-color: var(--border);
 }
 .cell-easy {
-  background: color-mix(in srgb, var(--gold) 8%, var(--bg-input));
-  border-color: color-mix(in srgb, var(--gold) 25%, transparent);
+  background: rgba(201, 149, 32, 0.06);
+  border-color: rgba(201, 149, 32, 0.2);
 }
 .cell-medium {
-  background: color-mix(in srgb, var(--gold) 12%, var(--bg-input));
-  border-color: color-mix(in srgb, #d4a030 30%, transparent);
+  background: rgba(180, 130, 30, 0.08);
+  border-color: rgba(180, 130, 30, 0.25);
 }
 .cell-hard {
-  background: color-mix(in srgb, var(--crimson) 8%, var(--bg-input));
-  border-color: color-mix(in srgb, var(--crimson) 25%, transparent);
+  background: rgba(193, 18, 31, 0.06);
+  border-color: rgba(193, 18, 31, 0.2);
 }
 
-/* Riddle badges */
+/* ── Badges ── */
 .badge-easy {
-  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  background: rgba(201, 149, 32, 0.1);
   color: var(--gold);
-  border: 1px solid color-mix(in srgb, var(--gold) 25%, transparent);
+  border: 1px solid rgba(201, 149, 32, 0.2);
 }
 .badge-medium {
-  background: color-mix(in srgb, #d4a030 12%, transparent);
-  color: #d4a030;
-  border: 1px solid color-mix(in srgb, #d4a030 25%, transparent);
+  background: rgba(180, 130, 30, 0.1);
+  color: #c89020;
+  border: 1px solid rgba(180, 130, 30, 0.2);
 }
 .badge-hard {
-  background: color-mix(in srgb, var(--crimson) 12%, transparent);
+  background: rgba(193, 18, 31, 0.1);
   color: var(--crimson);
-  border: 1px solid color-mix(in srgb, var(--crimson) 25%, transparent);
+  border: 1px solid rgba(193, 18, 31, 0.2);
+}
+
+/* ── Dice tray ── */
+.dice-tray {
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow:
+    inset 0 1px 3px rgba(0,0,0,0.3),
+    var(--shadow-card);
+  overflow: hidden;
+}
+
+/* ── Status dot pulsing ── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.pulse-dot {
+  animation: pulse-dot 1.5s ease-in-out infinite;
 }

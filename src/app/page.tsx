@@ -13,32 +13,25 @@ import ForcedRiddleAlert from '@/components/ForcedRiddleAlert';
 import WinnerModal from '@/components/WinnerModal';
 
 function ThemeToggle() {
-  const [dark, setDark] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') !== 'light';
-    }
-    return true;
-  });
+  const [dark, setDark] = useState(true);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
   }, [dark]);
-
-  const toggle = () => setDark((prev) => !prev);
 
   return (
     <button
-      onClick={toggle}
-      className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--bg-card-header)] text-sm transition-all hover:border-[var(--border-hover)] active:scale-95"
-      title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+      onClick={() => setDark((p) => !p)}
+      className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] text-sm transition-all hover:border-[var(--border-hover)] active:scale-95"
+      title={dark ? 'Light mode' : 'Dark mode'}
     >
       {dark ? (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--gold)]">
-          <circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[var(--gold)]">
+          <circle cx="12" cy="12" r="5" />
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
         </svg>
       ) : (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--text-dim)]">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[var(--text-dim)]">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       )}
@@ -60,7 +53,7 @@ function DashboardContent() {
         <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-xl">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center bg-gradient-to-br from-[var(--gold-bg)] to-[var(--gold)] text-white shadow-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--gold-bg)] to-[var(--gold)] text-white shadow-sm">
                 <svg width="18" height="18" viewBox="0 0 28 28" fill="none">
                   <path d="M14 2L6 8v4l8 6 8-6V8l-8-6z" fill="rgba(255,255,255,0.2)" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
                   <path d="M6 12v4l8 6 8-6v-4" stroke="white" strokeWidth="1.5" fill="none" strokeLinejoin="round"/>
@@ -103,7 +96,7 @@ function DashboardContent() {
 
         <footer className="relative z-10 mt-12 border-t border-[var(--border)] py-6 text-center">
           <div className="divider-rune px-4 max-w-xs mx-auto mb-4">
-            <span>✧ end of record ✧</span>
+            <span>end of record</span>
           </div>
           <p className="font-outfit text-xs font-medium text-[var(--text-muted)]">
             Riddle Rush &middot; Judge Dashboard &middot; {new Date().getFullYear()}
